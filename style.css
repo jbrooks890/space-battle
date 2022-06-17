@@ -1,0 +1,79 @@
+:root {
+    --pop: hsl(340, 100%, 50%);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+    background-color: black;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#game-board {
+    --size: 640px;
+    display: flex;
+    justify-content: space-between;
+    width: var(--size);
+    height: calc((var(--size)/3)*2);
+    border: 1px solid var(--pop);
+}
+
+.turf {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+}
+
+.turf.hero {
+    background-color: hsla(220, 100%, 50%, 0.25);
+}
+
+.turf.enemy {
+    background-color: hsla(0, 100%, 50%, 0.25);
+}
+
+#heroActor {
+    --size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--size);
+    height: var(--size);
+    font-size: 1rem;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+#enemy-grid-wrap {
+    position: relative;
+    width: 100%;
+    /* border: 1px solid red; */
+}
+
+#enemy-grid-wrap::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+}
+
+#enemy-grid {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#enemy-grid div {
+    border: 1px solid hsla(0, 0%, 100%, 0.25);
+}
