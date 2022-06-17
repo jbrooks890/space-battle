@@ -32,7 +32,7 @@ class Hero extends Character {
     constructor(hull, firepower, accuracy, name) {
         super(hull, firepower, accuracy);
         this.name = name;
-        this.weapons = ['Photon Gun'];
+        this.specialWeapons = [];
     }
 
     aim() {
@@ -43,7 +43,7 @@ class Hero extends Character {
 
     attack() {
         // super / apply?
-        // choose weapon
+        // choose weapon (if extra weapons available)
         // choose target via aim()
         // determine hit
         // calculate damage
@@ -79,9 +79,10 @@ test.attack();
 // :::::::: WEAPONS ::::::::
 
 class Weapon {
-    constructor(name, power, accuracy) {
+    constructor(name, power, type, accuracy) {
         this.name = name;
         this.power = power;
+        this.type = type; // eg projectile, beam, etc
         this.accuracy = accuracy;
     }
 }
