@@ -5,32 +5,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="script.js"></script>
+    <!-- <script defer src="script.js"></script> -->
+    <!-- <script src="script.js"></script> -->
     <link rel="stylesheet" href="style.css">
     <title>Space Battle</title>
 </head>
 
 <body>
-    <div id="game-board">
-        <div id="heroSide" class="turf hero">
-            <div id="heroActor">&times;</div>
-        </div>
-        <div id="enemySide" class="turf enemy">
-            <div id="enemy-grid-wrap">
-                <div id="enemy-grid">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+    <div id="game-wrap">
+        <div id="game-board">
+            <div id="heroSide" class="turf hero">
+                <!-- <div id="heroActor">&times;</div> -->
+            </div>
+            <div id="enemySide" class="turf enemy">
+                <div id="enemy-grid-wrap">
+                    <div id="enemy-grid">
+                        <!-- <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div> -->
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div id="messageBox">
+            <div id="messageBox-inner"></div>
+            <button id="cursorNext"></button>
+        </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
