@@ -35,6 +35,8 @@ body {
     transition: 0.1s ease-out;
     box-sizing: border-box;
     color: hsl(0, 0%, 90%);
+    font-family: PressStart2P;
+    line-height: 1.75em;
     /* border-radius: 10px; */
     opacity: 0;
     z-index: -1;
