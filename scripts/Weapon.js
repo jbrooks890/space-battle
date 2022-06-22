@@ -11,5 +11,12 @@ class Weapon {
         this.power = power;
         this.type = type; // eg projectile, beam, etc
         this.accuracy = accuracy;
+        this.scope;
+    }
+
+    aim() { // choose target(s) based on type
+        console.log('aiming at something!');
+        // move cursor onto target
+        // return target (enemy object)
     }
 }

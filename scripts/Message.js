@@ -1,4 +1,5 @@
 import {$game, $player} from './script.js'
+import { Objective } from './Objective.js';
 
 /* ================================================ **
 || ** MESSAGE **
@@ -18,7 +19,7 @@ class Message {
         this.container = document.querySelector('#messageBox');
         this.cursor = document.querySelector('#cursorNext');
         this.cursor.addEventListener('click', ()=>this.toNext())
-        this.initialize();
+        // this.initialize();
     }
 
     initialize(){
@@ -26,6 +27,7 @@ class Message {
         this.turnToPage(this.page);
         // this.loadCursor(this.turnToPage);
         // this.loadCursor();
+        // console.log(this.running('active'));
     }
 
     activate(){
@@ -75,7 +77,7 @@ class Message {
         this.printing = false;
     }
 
-    showPrompt(question) {
+    showPrompt(question, type='text', options=[]) {
         console.log('running showPrompt()');
         this.clearMessageBox();
         const printQuestion = document.createElement('p');

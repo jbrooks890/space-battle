@@ -1,7 +1,8 @@
 import {$game, $player} from './script.js'
-import { Message } from '/scripts/Message.js';
+import { Objective } from './Objective.js';
+import { Message } from './Message.js';
 
-class Space_Battle {
+class Game {
 
     constructor(score = 0, runtime = 0, gameState = 0) {
         this.score = score;
@@ -119,6 +120,7 @@ class Space_Battle {
 class Level {
     constructor(name, waves = [], rewards = [], background, stage = 0, script = []) {
         // name: eg 'Those Meddlesome Shroomians'
+        // super(script);
         this.name = name;
         // waves: arr of objs, fixed waves (exact design) vs varying stats
         this.waves = waves; // method to get waves from JSON files?
@@ -129,18 +131,21 @@ class Level {
         // background graphic
         this.background = background;
         // Awaiting input?
-        this.script = script // list of story items in chronological order
-        this.stage = stage; // current index pos of script (where player is in the script)
-        this.objectiveFullfilled = false;
+        this.objective = new Objective(script);
+        // this.script = script // list of story items in chronological order
+        // this.stage = stage; // current index pos of script (where player is in the script)
+        // this.objectiveFullfilled = false;
         this.successful = false;
     }
 
     start() {
-        this.run();
-        this.execute(this.script[0]);
+        console.log('starting Level');
+        console.log(this.objective);
+        this.objective.run().next();
+        // this.execute(this.tasks[0]);
     }
 
-    *run() {
+    /* *run() {
        while(this.objectiveFullfilled){
         yield this.execute(this.script[this.stage]);
        }
@@ -164,7 +169,8 @@ class Level {
             case 'message':
                 console.log('Message:', output);
                 const message = new Message(output);
-                console.log(message);
+                this.checkDone.call(message, 'active');
+                message.initialize();
                 break;
             case 'prompt':
                 console.log('Prompt', output);
@@ -194,6 +200,17 @@ class Level {
         }
     }
 
+    checkDone(targetBoolProperty){
+        // let status = new Promise;
+        // console.log('This object:', this);
+        console.log(this.hasOwnProperty(targetBoolProperty));
+        // let status = targetBoolProperty;
+    }
+
+    nextLine(){
+
+    } */
+
     // check
     // objectiveFullfilled() {}
 
@@ -212,4 +229,4 @@ class Wave extends Level {
     }
 }
 
-export {Space_Battle, Level, Wave}
+export {Game, Level, Wave}
