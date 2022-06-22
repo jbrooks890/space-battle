@@ -1,16 +1,16 @@
-    import { Game } from '/scripts/Space_Battle.js'
-    // import { Character, Hero, Alien } from 'script/Character.js'
-    
-    
-    const gameBoard = document.querySelector('#game-board');
-    const msgBox = document.querySelector('#messageBox');
-    const msgContent = document.querySelector('#messageBox-inner');
-    const msgCursor = document.querySelector('#cursorNext');
-    const heroSide = document.querySelector('#heroSide');
-    const enemySide = document.querySelector('#enemySide');
-    const gameStates = ['New', 'Start', 'Battle', 'End', 'Message', 'Awaiting'];
+import { Message } from "./Message.js"
+import { Game } from "./Space_Battle.js";
+// import { Character, Hero, Alien } from 'script/Character.js'
 
-    /* class Space_Battle {
+const gameBoard = document.querySelector("#game-board");
+const msgBox = document.querySelector("#messageBox");
+const msgContent = document.querySelector("#messageBox-inner");
+const msgCursor = document.querySelector("#cursorNext");
+const heroSide = document.querySelector("#heroSide");
+const enemySide = document.querySelector("#enemySide");
+const gameStates = ["New", "Start", "Battle", "End", "Message", "Awaiting"];
+
+/* class Space_Battle {
 
         constructor(score = 0, runtime = 0, gameState = 0) {
             this.score = score;
@@ -45,40 +45,9 @@
             //     enemySide.appendChild(alien.element);
             // }
 
-            this.currLevel = new Level('Game Start', [], [], '', 0, [
-                { message: "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot. Remind me again." },
-                { prompt: "What's your name or call sign?" },
-                { message: `Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming.` },
-                {
-                    proceed: function() {
-                        $player = new Hero(200, 60, 100, 8, name);
-                        console.log($player)
-                        this.gameState = 1;
-                        heroSide.appendChild($player.element);
-                        const wave = {
-                            number: 3,
-                            hull: 50,
-                            firepower: 30,
-                            accuracy: 90,
-                            speed: 9,
-                            name: 'Scout'
-                        }
-                        for (let i = 0; i < wave.number; i++) {
-                            let alien = new Alien(wave.hull, wave.firepower, wave.accuracy, wave.speed, wave.name, i + 1, 0, 0, [{ energy: 20 }]);
-                            this.enemies.push(alien);
-                            enemySide.appendChild(alien.element);
-                        }
-                    }
-                },
-                { message: "Looks like the SHROOMIANS sent a scout ahead. Prepare to engage!" },
-                { wave: 0 },
-                { message: `Excellent work <NAME>!\nMaybe you are everything they claim!\nHere! Take this.` }
-            ])
-
             // begin game loop (based on order)
             // <><><><><><> START GAME <><><><><><>
-            // this.battle();
-            this.currLevel.start();
+            this.battle();
         }
 
         battle() {
@@ -284,17 +253,14 @@
         }
     } */
 
-    // :::::::: OBJECTIVE ::::::::
-    // tasks = list of items that need to be resolved
-    // all tasks complete?
+// :::::::::::::::::: TEST EXECUTION ::::::::::::::::::
 
-    // :::::::::::::::::: TEST EXECUTION ::::::::::::::::::
+// msgCursor.onclick = () => {
+//     msgBox.classList.remove('active');
+// }
 
-    // msgCursor.onclick = () => {
-    //     msgBox.classList.remove('active');
-    // }
+export const $game = new Game();
+export const $msg = new Message();
+export let $player;
 
-    export const $game = new Game();
-    export let $player;
-
-    $game.start();
+$game.start();

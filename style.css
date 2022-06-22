@@ -157,11 +157,17 @@ body {
 /* <<<<<< GAME BOARD >>>>> */
 
 #game-board {
-    --size: 640px;
+    --max: 640px;
+    --min: 480;
+    flex-shrink: 0;
     display: flex;
     justify-content: space-between;
-    width: var(--size);
-    height: calc((var(--size)/3)*2);
+    width: 75vw;
+    height: calc((75vw/3)*2);
+    min-width: var(--min);
+    min-height: calc((var(--min)/3)*2);
+    max-width: var(--max);
+    max-height: calc((var(--max)/3)*2);
     border: 1px solid var(--pop);
 }
 

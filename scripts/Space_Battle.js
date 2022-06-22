@@ -1,4 +1,4 @@
-import {$game, $player} from './script.js'
+import {$msg, $player} from './script.js'
 import { Objective } from './Objective.js';
 import { Message } from './Message.js';
 
@@ -139,7 +139,7 @@ class Level {
     }
 
     start() {
-        console.log('starting Level');
+        // console.log('starting Level');
         console.log(this.objective);
         this.objective.run().next();
         // this.execute(this.tasks[0]);

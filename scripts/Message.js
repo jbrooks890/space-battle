@@ -8,11 +8,12 @@ import { Objective } from './Objective.js';
 ** ================================================ */
 
 class Message {
-    constructor(content, type = 'message', display = '', active = false){
-        this.content = content.split('\n'); //array
-        this.type = type;
-        this.display = display;
-        this.active = active;
+    constructor(){
+        this.content = '';
+        // this.objective = new Objective(this.content);
+        this.type = 'message';
+        this.display = '';
+        this.active = false;
         this.page = 0;
         this.printing = false;
         this.element = document.querySelector('#messageBox-inner');
@@ -22,8 +23,11 @@ class Message {
         // this.initialize();
     }
 
-    initialize(){
-        this.activate();
+    init(content, type = 'message', options = []){
+        this.content = content.split('\n'); //array
+        this.active = true;
+        this.container.classList.add('active');
+
         this.turnToPage(this.page);
         // this.loadCursor(this.turnToPage);
         // this.loadCursor();
@@ -56,7 +60,7 @@ class Message {
     }
 
     showMessage(msg) {
-        console.log('running showMessage');
+        // console.log('running showMessage');
         this.clearMessageBox();
         const printMsg = document.createElement('p');
         // for (let i = 0; i<msg.length; i++){
@@ -113,6 +117,7 @@ class Message {
         this.display = ''
         this.active = false;
         this.container.classList.remove('active');
+        $game.currLevel.objective.run().next();
     }
 }
 

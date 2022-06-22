@@ -1,0 +1,29 @@
+{
+  "name": "Game Start",
+  "waves": [],
+  "totalWaves": 0,
+  "rewards": [],
+  "background": "",
+  "objective": {
+    "tasks": [
+      {
+        "message": "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again."
+      },
+      { "prompt": "What's your name or call sign?" },
+      {
+        "message": "Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming."
+      },
+      {},
+      {
+        "message": "Looks like the SHROOMIANS sent a scout ahead. Prepare to engage!"
+      },
+      { "wave": 0 },
+      {
+        "message": "Excellent work <NAME>!\nMaybe you are everything they claim!\nHere! Take this."
+      }
+    ],
+    "line": 1,
+    "complete": false
+  },
+  "successful": false
+}
