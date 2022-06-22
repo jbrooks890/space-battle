@@ -1,3 +1,7 @@
+    import { Space_Battle } from '/scripts/Space_Battle.js'
+    // import { Character, Hero, Alien } from 'script/Character.js'
+    
+    
     const gameBoard = document.querySelector('#game-board');
     const msgBox = document.querySelector('#messageBox');
     const msgContent = document.querySelector('#messageBox-inner');
@@ -6,7 +10,7 @@
     const enemySide = document.querySelector('#enemySide');
     const gameStates = ['New', 'Start', 'Battle', 'End', 'Message', 'Awaiting'];
 
-    class Space_Battle {
+    /* class Space_Battle {
 
         constructor(score = 0, runtime = 0, gameState = 0) {
             this.score = score;
@@ -20,61 +24,61 @@
         }
 
         start() {
-            // load previous game
-            $player = new Hero(200, 60, 100, 8, 'Angel');
-            console.log($player)
-            this.gameState = 1;
-            heroSide.appendChild($player.element);
-            // // create enemies
-            console.log("Looks like the SHROOMIANS sent a scout ahead. Prepare to engage!");
-            const wave = {
-                number: 3,
-                hull: 50,
-                firepower: 30,
-                accuracy: 90,
-                speed: 9,
-                name: 'Scout'
-            }
-            for (let i = 0; i < wave.number; i++) {
-                let alien = new Alien(wave.hull, wave.firepower, wave.accuracy, wave.speed, wave.name, i + 1, 0, 0, [{ energy: 20 }]);
-                this.enemies.push(alien);
-                enemySide.appendChild(alien.element);
-            }
+            // // load previous game
+            // $player = new Hero(200, 60, 100, 8, 'Angel');
+            // console.log($player)
+            // this.gameState = 1;
+            // heroSide.appendChild($player.element);
+            // // // create enemies
+            // console.log("Looks like the SHROOMIANS sent a scout ahead. Prepare to engage!");
+            // const wave = {
+            //     number: 3,
+            //     hull: 50,
+            //     firepower: 30,
+            //     accuracy: 90,
+            //     speed: 9,
+            //     name: 'Scout'
+            // }
+            // for (let i = 0; i < wave.number; i++) {
+            //     let alien = new Alien(wave.hull, wave.firepower, wave.accuracy, wave.speed, wave.name, i + 1, 0, 0, [{ energy: 20 }]);
+            //     this.enemies.push(alien);
+            //     enemySide.appendChild(alien.element);
+            // }
 
-            // this.currLevel = new Level('Game Start', [], [], '', 0, [
-            //     { message: "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot. Remind me again." },
-            //     { prompt: "What's your name or call sign?" },
-            //     { message: `Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming.` },
-            //     {
-            //         proceed: function() {
-            //             $player = new Hero(200, 60, 100, 8, name);
-            //             console.log($player)
-            //             this.gameState = 1;
-            //             heroSide.appendChild($player.element);
-            //             const wave = {
-            //                 number: 3,
-            //                 hull: 50,
-            //                 firepower: 30,
-            //                 accuracy: 90,
-            //                 speed: 9,
-            //                 name: 'Scout'
-            //             }
-            //             for (let i = 0; i < wave.number; i++) {
-            //                 let alien = new Alien(wave.hull, wave.firepower, wave.accuracy, wave.speed, wave.name, i + 1, 0, 0, [{ energy: 20 }]);
-            //                 this.enemies.push(alien);
-            //                 enemySide.appendChild(alien.element);
-            //             }
-            //         }
-            //     },
-            //     { message: "Looks like the SHROOMIANS sent a scout ahead. Prepare to engage!" },
-            //     { wave: 0 },
-            //     { message: `Excellent work <NAME>!\nMaybe you are everything they claim!\nHere! Take this.` }
-            // ])
+            this.currLevel = new Level('Game Start', [], [], '', 0, [
+                { message: "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot. Remind me again." },
+                { prompt: "What's your name or call sign?" },
+                { message: `Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming.` },
+                {
+                    proceed: function() {
+                        $player = new Hero(200, 60, 100, 8, name);
+                        console.log($player)
+                        this.gameState = 1;
+                        heroSide.appendChild($player.element);
+                        const wave = {
+                            number: 3,
+                            hull: 50,
+                            firepower: 30,
+                            accuracy: 90,
+                            speed: 9,
+                            name: 'Scout'
+                        }
+                        for (let i = 0; i < wave.number; i++) {
+                            let alien = new Alien(wave.hull, wave.firepower, wave.accuracy, wave.speed, wave.name, i + 1, 0, 0, [{ energy: 20 }]);
+                            this.enemies.push(alien);
+                            enemySide.appendChild(alien.element);
+                        }
+                    }
+                },
+                { message: "Looks like the SHROOMIANS sent a scout ahead. Prepare to engage!" },
+                { wave: 0 },
+                { message: `Excellent work <NAME>!\nMaybe you are everything they claim!\nHere! Take this.` }
+            ])
 
             // begin game loop (based on order)
             // <><><><><><> START GAME <><><><><><>
-            this.battle();
-            // this.currLevel.start();
+            // this.battle();
+            this.currLevel.start();
         }
 
         battle() {
@@ -134,7 +138,6 @@
             const printMsg = document.createElement('p');
             printMsg.innerHTML = msg;
             msgContent.appendChild(printMsg);
-
         }
 
         showPrompt(question) {
@@ -206,7 +209,14 @@
         }
 
         start() {
+            this.run();
             this.execute(this.script[0]);
+        }
+
+        *run() {
+           while(this.objectiveFullfilled){
+            yield this.execute(this.script[this.stage]);
+           }
         }
 
         // when to proceed to next script command?
@@ -219,6 +229,9 @@
             const output = command[type];
 
             this.objectiveFullfilled = false;
+
+            console.log(command);
+            console.log(type);
 
             switch (type) {
                 case 'message':
@@ -247,7 +260,7 @@
                 if (this.successful) {
                     // give results
                 } else {
-                    // GAME OVERk
+                    // GAME OVER
                     console.log('stuff');
                 }
             }
@@ -269,13 +282,13 @@
             // story stuff
             // parent level <== necessary?
         }
-    }
+    } */
 
     // :::::::: OBJECTIVE ::::::::
-    // tasks
+    // tasks = list of items that need to be resolved
     // all tasks complete?
 
-    // :::::::: CHARACTER ::::::::
+   /*  // :::::::: CHARACTER ::::::::
 
     class Character {
         constructor(hull, firepower, accuracy, speed, name) {
@@ -372,17 +385,7 @@
     // :::::::: ALIEN ::::::::
 
     class Alien extends Character {
-        /**
-         * 
-         * @param {integer} hull 
-         * @param {integer} firepower 
-         * @param {integer} accuracy 
-         * @param {string} name 
-         * @param {integer} index 
-         * @param {integer} x 
-         * @param {integer} y 
-         * @param {Array of Objects} drops 
-         */
+
         constructor(hull, firepower, accuracy, speed, name, index = null, x = 0, y = 0, drops = []) {
             super(hull, firepower, accuracy, speed, `${name} ${index}`);
             this.x = x;
@@ -414,7 +417,7 @@
             }
         }
 
-    }
+    } */
 
     // :::::::: WEAPONS ::::::::
 
@@ -436,12 +439,12 @@
 
     // :::::::::::::::::: TEST EXECUTION ::::::::::::::::::
 
-    msgCursor.onclick = () => {
-        msgBox.classList.remove('active');
-    }
+    // msgCursor.onclick = () => {
+    //     msgBox.classList.remove('active');
+    // }
 
-    const $game = new Space_Battle();
-    let $player;
+    export const $game = new Space_Battle();
+    export let $player;
 
     $game.start();
     console.log($game.currLevel);

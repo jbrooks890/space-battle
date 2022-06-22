@@ -8,6 +8,8 @@
     <!-- <script defer src="script.js"></script> -->
     <!-- <script src="script.js"></script> -->
     <link rel="stylesheet" href="style.css">
+    <script defer src="./scripts/script.js" type="module"></script>
+    <!-- <script defer src="./scripts/Space_Battle.js" type="module"></script> -->
     <title>Space Battle</title>
 </head>
 
@@ -19,27 +21,18 @@
             </div>
             <div id="enemySide" class="turf enemy">
                 <div id="enemy-grid-wrap">
-                    <div id="enemy-grid">
-                        <!-- <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div> -->
-                    </div>
+                    <div id="enemy-grid"></div>
                 </div>
             </div>
         </div>
 
         <div id="messageBox">
-            <div id="messageBox-inner"></div>
+            <div id="messageBox-inner">
+            </div>
             <button id="cursorNext"></button>
         </div>
     </div>
-    <script src="script.js" onclick="$game.currLevel.resolve()"></script>
+    
 </body>
 
 </html>
