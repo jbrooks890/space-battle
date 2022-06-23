@@ -60,7 +60,7 @@ class Message {
 
   showMessage(msg) {
     // console.log('running showMessage');
-    console.log("Message:", msg);
+    console.log("Message:", msg);``
     this.clearMessageBox();
     const printMsg = document.createElement("p");
     // for (let i = 0; i<msg.length; i++){
