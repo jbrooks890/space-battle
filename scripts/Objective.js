@@ -1,6 +1,6 @@
-import { $msg, $game, $player } from "./script.js";
+import { $game, $player } from "./script.js";
 import { Character, Hero, Alien } from "./Character.js";
-import { Message } from "./Message.js";
+import { Message, Prompt } from "./Message.js";
 
 export class Objective {
   constructor(tasks) {
@@ -32,13 +32,16 @@ export class Objective {
     switch (type) {
       case "message":
         // console.log("Message:", output);
-        $msg.init(output);
-        this.checkDone.call($msg, "active");
+        let message = new Message(output);
+        message.init();
+        // this.checkDone.call($msg, "active");
         break;
       case "prompt":
         console.log("Prompt", output);
-        $msg.init(output, "prompt");
-        this.checkDone.call($msg, "active");
+        let prompt = new Prompt(output);
+        prompt.init();
+        // $msg.init(output, "prompt");
+        // this.checkDone.call($msg, "active");
         // const prompt = new Message(output, 'prompt')
         // $game.showPrompt(output);
         break;

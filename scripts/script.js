@@ -261,7 +261,7 @@ const gameStates = ["New", "Start", "Battle", "End", "Message", "Awaiting"];
 // }
 
 export const $game = new Game();
-export const $msg = new Message();
+// export const $msg = new Message();
 export const $player = new Hero(200, 60, 100, 8, "");
 
 $game.start();

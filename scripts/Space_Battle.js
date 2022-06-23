@@ -1,4 +1,4 @@
-import { $msg, $player } from "./script.js";
+import { $player } from "./script.js";
 import { Character, Hero, Alien } from "./Character.js";
 import { Objective } from "./Objective.js";
 import { Message } from "./Message.js";
@@ -15,11 +15,14 @@ class Game {
 
   start() {
     this.currLevel = new Level("Game Start", [], [], "", 0, [
-      // { message: "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again." },
-      { prompt: "What's your name or call sign?" },
-      {
-        message: `Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming.`,
-      },
+      //   {
+      //     message:
+      //       "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
+      //   },
+      //   { prompt: "What's your name or call sign?" },
+      //   {
+      //     message: `Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming.`,
+      //   },
       {
         proceed: () => {
           //   $player = new Hero(200, 60, 100, 8, name);
@@ -51,10 +54,10 @@ class Game {
           }
         },
       },
-      {
-        message:
-          "Looks like the SHROOMIANS sent a scout ahead. Prepare to engage!",
-      },
+      //   {
+      //     message:
+      //       "Looks like the SHROOMIANS sent a scout ahead.\nPrepare to engage!",
+      //   },
       { wave: 0 },
       {
         message: `Excellent work <NAME>!\nMaybe you are everything they claim!\nHere! Take this.`,

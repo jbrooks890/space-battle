@@ -86,10 +86,11 @@ body {
   justify-self: center;
   background-color: transparent;
   padding: 1rem;
-  color: white;
+  color: yellow;
   font-family: Dosis;
   text-align: center;
   text-transform: uppercase;
+  caret-color: white;
   line-height: 1em;
   letter-spacing: 0.25rem;
   /* caret-color: transparent; */

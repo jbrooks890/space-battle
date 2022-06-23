@@ -8,10 +8,10 @@ import { Objective } from "./Objective.js";
 ** ================================================ */
 
 class Message {
-  constructor() {
-    this.content = "";
+  constructor(content, type = "message") {
+    this.content = content.split("\n"); //array;
     // this.objective = new Objective(this.content);
-    this.type = "message";
+    this.type = type;
     this.display = "";
     this.active = false;
     this.page = 0;
@@ -20,18 +20,12 @@ class Message {
     this.container = document.querySelector("#messageBox");
     this.cursor = document.querySelector("#cursorNext");
     this.cursor.addEventListener("click", () => this.toNext());
+    this.activate();
     // this.initialize();
   }
 
-  init(content, type = "message", options = []) {
-    this.content = content.split("\n"); //array
-    this.active = true;
-    this.container.classList.add("active");
-
+  init() {
     this.turnToPage(this.page);
-    // this.loadCursor(this.turnToPage);
-    // this.loadCursor();
-    // console.log(this.running('active'));
   }
 
   activate() {
@@ -49,24 +43,14 @@ class Message {
   }
 
   turnToPage(target = (this.page += 1)) {
-    // console.log('running turn page');
-    // if (this.page >= this.content.length - 1){
-    //     this.dispose()
-    // } else {
-    //     this.showMessage(this.content[target]);
-    // }
     this.showMessage(this.content[target]);
   }
 
   showMessage(msg) {
     // console.log('running showMessage');
-    console.log("Message:", msg);``
+    console.log("Message:", msg);
     this.clearMessageBox();
     const printMsg = document.createElement("p");
-    // for (let i = 0; i<msg.length; i++){
-    //     printMsg.
-    // }
-    // printMsg.innerHTML = msg;
     this.element.appendChild(printMsg);
     // printMsg.innerText = msg;
     this.animateText(msg, printMsg, 0);
@@ -83,29 +67,9 @@ class Message {
     this.printing = false;
   }
 
-  showPrompt(question, type = "text", options = []) {
-    console.log("running showPrompt()");
-    this.clearMessageBox();
-    const printQuestion = document.createElement("p");
-    printQuestion.innerHTML = question;
-
-    const newPrompt = document.createElement("input");
-
-    newPrompt.setAttribute("type", "text");
-    this.element.appendChild(printQuestion);
-    this.element.appendChild(newPrompt);
-  }
-
   clearMessageBox() {
     // this.element.classList.add('active');
     this.element.innerHTML = ""; //clear messageBox;
-  }
-
-  collectPrompt(prompt) {
-    console.log("running collectPrompt()");
-    if (`${prompt.value}`.length > 0) {
-      return prompt.value.toUpperCase();
-    }
   }
 
   dispose() {
@@ -116,4 +80,49 @@ class Message {
   }
 }
 
-export { Message };
+/* ================================================ **
+|| ** PROMPT **
+** ================================================ */
+
+class Prompt extends Message {
+  constructor(question, type, options) {
+    super(question, type, options);
+    this.input;
+    this.result;
+  }
+
+  init() {
+    this.container.classList.add("prompt");
+    this.cursor.addEventListener("click", this.collectPrompt);
+    this.showPrompt();
+  }
+
+  dispose() {
+    this.container.classList.remove("prompt");
+    this.cursor.removeEventListener("click", this.collectPrompt);
+    super.dispose();
+  }
+
+  showPrompt() {
+    console.log("running showPrompt()");
+    this.clearMessageBox();
+    const printQuestion = document.createElement("p");
+    printQuestion.innerHTML = this.content;
+
+    this.input = document.createElement("input");
+
+    this.input.setAttribute("type", "text");
+    this.element.appendChild(printQuestion);
+    this.element.appendChild(this.input);
+  }
+
+  collectPrompt() {
+    console.log("running collectPrompt()");
+    if (this.input.value.length > 0) {
+      this.result = this.input.value.toUpperCase();
+      this.dispose();
+    }
+  }
+}
+
+export { Message, Prompt };
