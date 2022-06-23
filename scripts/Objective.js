@@ -1,4 +1,5 @@
 import { $msg, $game, $player } from "./script.js";
+import { Character, Hero, Alien } from "./Character.js";
 import { Message } from "./Message.js";
 
 export class Objective {
@@ -36,7 +37,7 @@ export class Objective {
         break;
       case "prompt":
         console.log("Prompt", output);
-        $msg.init(output, 'prompt');
+        $msg.init(output, "prompt");
         this.checkDone.call($msg, "active");
         // const prompt = new Message(output, 'prompt')
         // $game.showPrompt(output);
@@ -46,6 +47,8 @@ export class Objective {
         break;
       case "proceed":
         console.log("executing code");
+        output();
+        $game.currLevel.objective.run().next();
         break;
       default:
         console.log("This shit broke");

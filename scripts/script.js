@@ -1,5 +1,6 @@
-import { Message } from "./Message.js"
+import { Message } from "./Message.js";
 import { Game } from "./Space_Battle.js";
+import { Character, Hero, Alien } from "./Character.js";
 // import { Character, Hero, Alien } from 'script/Character.js'
 
 const gameBoard = document.querySelector("#game-board");
@@ -261,6 +262,6 @@ const gameStates = ["New", "Start", "Battle", "End", "Message", "Awaiting"];
 
 export const $game = new Game();
 export const $msg = new Message();
-export let $player;
+export const $player = new Hero(200, 60, 100, 8, "");
 
 $game.start();

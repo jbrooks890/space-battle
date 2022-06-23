@@ -1,242 +1,239 @@
 @font-face {
-    font-family: PressStart2P;
-    src: url(/fonts/PressStart2P-Regular.ttf);
+  font-family: PressStart2P;
+  src: url(/fonts/PressStart2P-Regular.ttf);
 }
 
 :root {
-    --pop: hsl(340, 100%, 50%);
+  --pop: hsl(340, 100%, 50%);
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    height: 100vh;
-    background-color: black;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  height: 100vh;
+  background-color: black;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 #game-wrap {
-    position: relative;
+  position: relative;
 }
-
 
 /* <<<<<< MESSAGE BOX >>>>> */
 
 #messageBox {
-    position: absolute;
-    /* display: none; */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid blue; */
-    transition: 0.1s ease-out;
-    box-sizing: border-box;
-    color: hsl(0, 0%, 90%);
-    font-family: PressStart2P;
-    line-height: 1.75em;
-    /* border-radius: 10px; */
-    opacity: 0;
-    z-index: -1;
+  position: absolute;
+  /* display: none; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid blue; */
+  transition: 0.1s ease-out;
+  box-sizing: border-box;
+  color: hsl(0, 0%, 90%);
+  font-family: PressStart2P;
+  line-height: 1.75em;
+  /* border-radius: 10px; */
+  opacity: 0;
+  z-index: -1;
 }
 
 #messageBox::before {
-    --offset: 10px;
-    content: '';
-    position: absolute;
-    display: block;
-    top: calc(var(--offset)*-1);
-    left: calc(var(--offset)*-1);
-    right: calc(var(--offset)*-1);
-    bottom: calc(var(--offset)*-1);
-    background-color: black;
-    filter: blur(var(--offset));
-    opacity: 0.95;
+  --offset: 10px;
+  content: "";
+  position: absolute;
+  display: block;
+  top: calc(var(--offset) * -1);
+  left: calc(var(--offset) * -1);
+  right: calc(var(--offset) * -1);
+  bottom: calc(var(--offset) * -1);
+  background-color: black;
+  filter: blur(var(--offset));
+  opacity: 0.95;
 }
 
 #messageBox.active {
-    /* position: absolute; */
-    /* display: none; */
-    /* top: 0; */
-    /* left: 0; */
-    display: flex;
-    align-items: center;
-    opacity: 1;
-    z-index: 1;
+  /* position: absolute; */
+  /* display: none; */
+  /* top: 0; */
+  /* left: 0; */
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  z-index: 1;
 }
 
 #messageBox-inner {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem;
-    width: 100%;
-    height: 100%;
-    color: white;
-    text-align: center;
-    box-sizing: border-box;
-    border: 2px solid #00ffff;
-    border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  color: white;
+  text-align: center;
+  box-sizing: border-box;
+  border: 2px solid #00ffff;
+  border-radius: 10px;
 }
 
 #messageBox-inner input {
-    appearance: none;
-    justify-self: center;
-    background-color: transparent;
-    padding: 1rem;
-    color: white;
-    font-family: Dosis;
-    text-align: center;
-    text-transform: uppercase;
-    line-height: 1em;
-    letter-spacing: 0.25rem;
-    /* caret-color: transparent; */
-    outline: none;
-    border: none;
-    border: 1.5px solid white;
-    border-radius: 10px;
-    font-size: 1.5rem;
+  appearance: none;
+  justify-self: center;
+  background-color: transparent;
+  padding: 1rem;
+  color: white;
+  font-family: Dosis;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1em;
+  letter-spacing: 0.25rem;
+  /* caret-color: transparent; */
+  outline: none;
+  border: none;
+  border: 1.5px solid white;
+  border-radius: 10px;
+  font-size: 1.5rem;
 }
-
 
 /* <<<<<< MESSAGE BOX CURSOR >>>>> */
 
 #messageBox #cursorNext {
-    position: absolute;
-    display: flex;
-    appearance: none;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    /* clip-path: polygon(0% 0%, 50% 100%, 100% 0%); */
-    line-height: 1em;
-    bottom: 0;
-    left: 50%;
-    width: 1.5rem;
-    height: 1rem;
-    transform: translate(-50%, 50%);
-    border: none;
-    /* border-radius: 50%; */
-    cursor: pointer;
-    /* TWIRL ANIMATION */
+  position: absolute;
+  display: flex;
+  appearance: none;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  /* clip-path: polygon(0% 0%, 50% 100%, 100% 0%); */
+  line-height: 1em;
+  bottom: 0;
+  left: 50%;
+  width: 1.5rem;
+  height: 1rem;
+  transform: translate(-50%, 50%);
+  border: none;
+  /* border-radius: 50%; */
+  cursor: pointer;
+  /* TWIRL ANIMATION */
 }
 
 #messageBox #cursorNext::before {
-    content: '';
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
-    background-color: var(--pop);
-    animation: cursor-bob 1s infinite;
-    transition: 0.1s ease-out;
-    box-sizing: border-box;
-    box-shadow: 0 0 10px black;
-    /* border: 1px solid red; */
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+  background-color: var(--pop);
+  animation: cursor-bob 1s infinite;
+  transition: 0.1s ease-out;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px black;
+  /* border: 1px solid red; */
 }
 
 @keyframes cursor-bob {
-    0% {
-        transform: translateY(-5px);
-    }
-    50% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-5px);
-    }
+  0% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
 }
-
 
 /* <<<<<< GAME BOARD >>>>> */
 
 #game-board {
-    --max: 640px;
-    --min: 480;
-    flex-shrink: 0;
-    display: flex;
-    justify-content: space-between;
-    width: 75vw;
-    height: calc((75vw/3)*2);
-    min-width: var(--min);
-    min-height: calc((var(--min)/3)*2);
-    max-width: var(--max);
-    max-height: calc((var(--max)/3)*2);
-    border: 1px solid var(--pop);
+  --max: 640px;
+  --min: 480;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 75vw;
+  height: calc((75vw / 3) * 2);
+  min-width: var(--min);
+  min-height: calc((var(--min) / 3) * 2);
+  max-width: var(--max);
+  max-height: calc((var(--max) / 3) * 2);
+  border: 1px solid var(--pop);
 }
 
 .turf {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
 }
 
 .turf.hero {
-    background-color: hsla(220, 100%, 50%, 0.25);
+  background-color: hsla(220, 100%, 50%, 0.25);
 }
 
 .turf.enemy {
-    background-color: hsla(0, 100%, 50%, 0.25);
+  background-color: hsla(0, 100%, 50%, 0.25);
 }
 
 #heroActor,
 .enemyActor {
-    --size: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: var(--size);
-    height: var(--size);
-    font-size: 1rem;
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 50%;
+  --size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--size);
+  height: var(--size);
+  font-size: 1rem;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
 }
 
 #heroActor {
-    --color: hsl(220, 100%, 50%);
-    color: var(--color);
-    border-color: var(--color);
+  --color: hsl(220, 100%, 50%);
+  color: var(--color);
+  border-color: var(--color);
 }
 
 .enemyActor {
-    --color: hsl(0, 100%, 50%);
-    color: var(--color);
-    border-color: var(--color);
+  --color: hsl(0, 100%, 50%);
+  color: var(--color);
+  border-color: var(--color);
 }
 
 #enemy-grid-wrap {
-    position: relative;
-    width: 100%;
-    /* border: 1px solid red; */
+  position: relative;
+  width: 100%;
+  /* border: 1px solid red; */
 }
 
 #enemy-grid-wrap::before {
-    content: '';
-    display: block;
-    padding-bottom: 100%;
+  content: "";
+  display: block;
+  padding-bottom: 100%;
 }
 
 #enemy-grid {
-    position: absolute;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 2px;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #enemy-grid div {
-    border: 1px solid hsla(0, 0%, 100%, 0.25);
+  border: 1px solid hsla(0, 0%, 100%, 0.25);
 }
