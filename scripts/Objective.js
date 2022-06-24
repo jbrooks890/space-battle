@@ -47,6 +47,7 @@ export class Objective {
         break;
       case "wave":
         console.log("fight enemies!");
+        $game.battle().next();
         break;
       case "proceed":
         console.log("executing code");

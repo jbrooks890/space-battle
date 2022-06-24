@@ -260,8 +260,10 @@ const gameStates = ["New", "Start", "Battle", "End", "Message", "Awaiting"];
 //     msgBox.classList.remove('active');
 // }
 
-export const $game = new Game();
+const $game = new Game();
 // export const $msg = new Message();
-export const $player = new Hero(200, 60, 100, 8, "");
+const $player = new Hero(200, 8, "Angel");
 
 $game.start();
+
+export { $game, $player, enemySide };

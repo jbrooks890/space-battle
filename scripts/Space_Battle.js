@@ -1,7 +1,12 @@
 import { $player } from "./script.js";
-import { Character, Hero, Alien } from "./Character.js";
+import { Alien } from "./Character.js";
 import { Objective } from "./Objective.js";
 import { Message } from "./Message.js";
+
+/* ================================================ **
+|| ** GAME **
+|| - Main class
+** ================================================ */
 
 class Game {
   constructor(score = 0, runtime = 0, gameState = 0) {
@@ -12,6 +17,10 @@ class Game {
     this.enemies = [];
     this.currLevel;
   }
+
+  /* --------------------------------------------- **
+  || START
+  ** --------------------------------------------- */
 
   start() {
     this.currLevel = new Level("Game Start", [], [], "", 0, [
@@ -25,8 +34,6 @@ class Game {
       //   },
       {
         proceed: () => {
-          //   $player = new Hero(200, 60, 100, 8, name);
-          //   console.log($player);
           this.gameState = 1;
           heroSide.appendChild($player.element);
           const wave = {
@@ -70,7 +77,11 @@ class Game {
     this.currLevel.start();
   }
 
-  battle() {
+  /* --------------------------------------------- **
+  || BATTLE
+  ** --------------------------------------------- */
+
+  *battle() {
     this.gameState = 2;
     console.log(
       `${$player.name} vs. ${this.enemies.map((opp) => opp.name).join(", ")}!`
@@ -87,15 +98,23 @@ class Game {
         "color: orange",
         turnOrder.map((char) => char.name).join(", ")
       );
-      // attack in order
-      turnOrder.forEach((attacker) => {
-        let target =
-          attacker === $player
-            ? opponents[Math.floor(Math.random() * opponents.length)]
-            : $player;
+
+      console.log("battle test!!");
+
+      for (let attacker of turnOrder) {
+        // let target =
+        //   attacker === $player
+        //     ? opponents[Math.floor(Math.random() * opponents.length)]
+        //     : $player;
         // console.log(target);
-        if (attacker.isAlive && target.isAlive) attacker.attack(target);
-      });
+        // if (attacker.isAlive && target.isAlive) attacker.attack(target);
+
+        if (attacker === $player) {
+          yield $player.attack(opponents);
+        } else {
+          attacker.attack($player);
+        }
+      }
       console.log("%c \n------- Results -------\n", "color: lime");
       console.log(`${$player.name} health: ${$player.hull}`);
       opponents.forEach((enemy) =>
@@ -111,6 +130,10 @@ class Game {
     // let turnOrder = this.getTurnOrder(opponents);
     // console.log(turnOrder);
   }
+
+  /* --------------------------------------------- **
+  || GET TURN ORDER
+  ** --------------------------------------------- */
 
   getTurnOrder(opponents) {
     // console.log(`getTurnOrder ${opponents.map(x => x.name).join(", ")}`);
@@ -146,9 +169,11 @@ class Game {
   //retreat?
 }
 
-// :::::::: LEVEL ::::::::
-// Level can have multiple waves
-// Level will have story chain
+/* ================================================ **
+|| ** LEVEL **
+|| - Level can have multiple waves
+|| - Level will have story 
+** ================================================ */
 
 class Level {
   constructor(

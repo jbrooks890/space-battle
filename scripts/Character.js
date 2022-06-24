@@ -1,4 +1,5 @@
-import { $game } from "./script.js";
+import { $game, $player } from "./script.js";
+import { Weapon } from "./Weapon.js";
 
 class Character {
   constructor(hull, firepower, accuracy, speed, name) {
@@ -56,10 +57,14 @@ class Character {
 // :::::::: HERO ::::::::
 
 class Hero extends Character {
-  constructor(hull, firepower, accuracy, speed, name) {
-    super(hull, firepower, accuracy, speed, name);
+  // $player = new Hero(200, 60, 100, 8, "");
+  constructor(hull, speed, name) {
+    super(hull, 0, 0, speed, name);
     this.actions = [];
-    this.specialWeapons = [];
+    this.arsenal = [new Weapon()];
+    this.weapon = this.arsenal[0];
+    this.firepower = this.weapon.power;
+    this.accuracy = this.weapon.accuracy;
   }
 
   create() {
@@ -73,18 +78,25 @@ class Hero extends Character {
     // player chooses to: attack, repair, retreat
   }
 
-  // attack() {
-  // super / apply?
-  // choose weapon (if extra weapons available)
-  // choose target via aim()
-  // determine hit
-  // calculate damage
-  // }
+  /**
+   *
+   * @param {array} targets array of available targets
+   */
+  attack(targets) {
+    // let target = this.aim();
+    console.log(this.weapon);
+    let weapon = this.arsenal.length > 1 ? this.chooseWeapon() : $player.weapon;
+    let target = this.weapon.aim(targets);
+    // super / apply?
+    // choose weapon (if extra weapons available)
+    // choose target via aim()
+    // determine hit
+    // calculate damage
+  }
 
-  aim() {
-    console.log("aiming at something!");
-    // move cursor onto target
-    // return target (enemy object)
+  chooseWeapon() {
+    // setup selection window
+    // return selected weapon index
   }
 
   retreat() {
