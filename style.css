@@ -4,6 +4,7 @@
 }
 
 :root {
+  --tileSize: 48px;
   --pop: hsl(340, 100%, 50%);
 }
 
@@ -13,13 +14,244 @@ body {
   align-items: center;
   margin: 0;
   height: 100vh;
+  color: white;
   background-color: black;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 #game-wrap {
   position: relative;
+  box-sizing: border-box;
 }
+
+/* <<<<<< GAME BOARD >>>>> */
+
+#game-board {
+  --max: 720px;
+  --min: 480px;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 75vw;
+  height: calc((75vw / 3) * 2);
+  min-width: var(--min);
+  min-height: calc((var(--min) / 3) * 2);
+  max-width: var(--max);
+  max-height: calc((var(--max) / 3) * 2);
+  color: white;
+  font-family: PressStart2P;
+  /* font-size: smaller; */
+  box-sizing: border-box;
+  border: 1px solid var(--pop);
+}
+
+.turf {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-items: center;
+  width: 40%;
+}
+
+.turf.hero {
+  background-color: hsla(220, 100%, 50%, 0.25);
+}
+
+.turf.enemy {
+  background-color: hsla(0, 100%, 50%, 0.25);
+}
+
+.actor {
+  --size: 3rem;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--size);
+  height: var(--size);
+  font-size: 1rem;
+  /* border-width: 2px; */
+  /* border-style: solid; */
+  /* border-radius: 50%; */
+}
+
+@keyframes blink {
+  0% {
+    filter: brightness(100%);
+  }
+  50% {
+    filter: brightness(300%);
+  }
+  100% {
+    filter: brightness(100%);
+  }
+}
+
+
+.actor.selected {
+  animation: blink 1s infinite;
+}
+
+#heroActor {
+  --color: hsl(220, 100%, 50%);
+  color: var(--color);
+  /* border-color: var(--color); */
+  border: 2px solid var(--color);
+  border-radius: 50%;
+}
+
+.enemyActor::before {
+  --color: hsl(0, 100%, 50%);
+  content: '';
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* color: var(--color); */
+  /* border-color: var(--color); */
+  background-color: var(--color);
+  clip-path: polygon(0% 50%, 100% 100%, 100% 0%);
+  /* clip-path: polygon(5px 0, 0 5px, 0 10px, 5px 15px, 30px 15px, 35px 10px, 35px 5px, 30px 0 ); */
+}
+
+.enemyActor::after {
+  content: attr(data-actor-name);
+  position: absolute;
+  display: block;
+  top: 0;
+  /* left: 0; */
+  width: 100%;
+  /* height: 100%; */
+  padding-bottom: 1rem;
+  text-align: center;
+  white-space: nowrap;
+  font-family: Dosis;
+  font-size: small;
+  text-transform: uppercase;
+  transition: 0.1s ease-out;
+  opacity: 0;
+  /* background-color: black; */
+}
+
+.enemyActor:hover::after {
+  transform: translateY(-100%);
+  opacity: 1;
+}
+
+/* #enemySide.aiming .enemyActor:hover::before {
+  cursor: none;
+  background-color: orange;
+} */
+
+/* #enemySide.aiming .enemyActor {
+  cursor: none;
+} */
+
+/* #enemySide.aiming .enemyActor:hover::after {
+  --offset: -5px;
+  content: '';
+  position: absolute;
+  display: block;
+  top: var(--offset);
+  left: var(--offset);
+  right: var(--offset);
+  bottom: var(--offset);
+  border: 2px solid orange;
+  border-radius: 10px;
+} */
+
+#enemy-grid-wrap {
+  position: relative;
+  width: 100%;
+  /* border: 1px solid red; */
+}
+
+#enemy-grid-wrap::before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+#enemy-grid {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#enemy-grid div {
+  border: 1px solid hsla(0, 0%, 100%, 0.25);
+}
+
+/* <<<<<< GAME MENU >>>>> */
+
+#game-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: 0.2s ease-out;
+  background-color: hsla(0,0%,0%,0.9);
+  padding: 2rem;
+  border: 2px solid cyan;
+  border-radius: 10px;
+  box-sizing: border-box;
+  opacity: 0;
+  z-index: -1;
+}
+
+#game-menu.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+#game-bottom-cache {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 2px solid var(--pop);
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+#game-bottom-cache button {
+  appearance: none;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 1em 1.5em;
+  color: white;
+  font-family: PressStart2P;
+  line-height: 1em;
+  text-align: center;
+  transition: 0.1s ease-out;
+  border: 2px solid white;
+  border-radius: 100px;
+}
+
+#game-bottom-cache button:hover {
+  background-color: white;
+  color: black;
+}
+
+#game-bottom-cache button:not(:last-of-type){
+  margin-right: 1em;
+}
+
+
 
 /* <<<<<< MESSAGE BOX >>>>> */
 
@@ -150,127 +382,4 @@ body {
   100% {
     transform: translateY(-5px);
   }
-}
-
-/* <<<<<< GAME BOARD >>>>> */
-
-#game-board {
-  --max: 640px;
-  --min: 480;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: space-between;
-  width: 75vw;
-  height: calc((75vw / 3) * 2);
-  min-width: var(--min);
-  min-height: calc((var(--min) / 3) * 2);
-  max-width: var(--max);
-  max-height: calc((var(--max) / 3) * 2);
-  border: 1px solid var(--pop);
-}
-
-.turf {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-items: center;
-  width: 40%;
-}
-
-.turf.hero {
-  background-color: hsla(220, 100%, 50%, 0.25);
-}
-
-.turf.enemy {
-  background-color: hsla(0, 100%, 50%, 0.25);
-}
-
-#heroActor,
-.enemyActor {
-  --size: 3rem;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: var(--size);
-  height: var(--size);
-  font-size: 1rem;
-  /* border-width: 2px; */
-  /* border-style: solid; */
-  /* border-radius: 50%; */
-}
-
-#heroActor {
-  --color: hsl(220, 100%, 50%);
-  color: var(--color);
-  /* border-color: var(--color); */
-  border: 2px solid var(--color);
-  border-radius: 50%;
-}
-
-.enemyActor::before {
-  --color: hsl(0, 100%, 50%);
-  content: '';
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* color: var(--color); */
-  /* border-color: var(--color); */
-  background-color: var(--color);
-  clip-path: polygon(0% 50%, 100% 100%, 100% 0%);
-  /* clip-path: polygon(5px 0, 0 5px, 0 10px, 5px 15px, 30px 15px, 35px 10px, 35px 5px, 30px 0 ); */
-}
-
-#enemySide.aiming .enemyActor:hover::before {
-  cursor: none;
-  background-color: orange;
-}
-
-/* #enemySide.aiming .enemyActor {
-  cursor: none;
-} */
-
-#enemySide.aiming .enemyActor:hover::after {
-  --offset: -5px;
-  content: '';
-  position: absolute;
-  display: block;
-  top: var(--offset);
-  left: var(--offset);
-  right: var(--offset);
-  bottom: var(--offset);
-  border: 2px solid orange;
-  border-radius: 10px;
-}
-
-#enemy-grid-wrap {
-  position: relative;
-  width: 100%;
-  /* border: 1px solid red; */
-}
-
-#enemy-grid-wrap::before {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
-}
-
-#enemy-grid {
-  position: absolute;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 2px;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-#enemy-grid div {
-  border: 1px solid hsla(0, 0%, 100%, 0.25);
 }

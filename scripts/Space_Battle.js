@@ -110,7 +110,7 @@ class Game {
         // if (attacker.isAlive && target.isAlive) attacker.attack(target);
 
         if (attacker === $player) {
-          yield $player.attack(opponents);
+          yield $player.prepareToFire();
         } else {
           attacker.attack($player);
         }
@@ -153,6 +153,10 @@ class Game {
     return sorted.sort((a, b) => b.speed - a.speed).map((x) => x.char);
   }
 
+  /* --------------------------------------------- **
+  || REMAINING
+  ** --------------------------------------------- */
+
   remaining() {
     console.log(
       "Remaining:",
@@ -167,6 +171,7 @@ class Game {
   }
 
   //retreat?
+  openMenu() {}
 }
 
 /* ================================================ **
@@ -209,72 +214,6 @@ class Level {
     this.objective.run().next();
     // this.execute(this.tasks[0]);
   }
-
-  /* *run() {
-       while(this.objectiveFullfilled){
-        yield this.execute(this.script[this.stage]);
-       }
-    }
-
-    // when to proceed to next script command?
-    // ^^ once the previous one is resolved
-    // ^^ resolved once designated task is completed
-    // ^^ messages are always resolved once text is read and cursor is clicked
-
-    execute(command) {
-        const type = Object.keys(command)[0];
-        const output = command[type];
-
-        this.objectiveFullfilled = false;
-
-        console.log(command);
-        console.log(type);
-
-        switch (type) {
-            case 'message':
-                console.log('Message:', output);
-                const message = new Message(output);
-                this.checkDone.call(message, 'active');
-                message.initialize();
-                break;
-            case 'prompt':
-                console.log('Prompt', output);
-                $game.showPrompt(output);
-                break;
-            case 'wave':
-                console.log('fight enemies!');
-                break;
-            case 'proceed':
-                console.log('executing code');
-                break;
-            default:
-                console.log('This shit broke');
-        }
-    }
-
-    resolve() {
-        if (this.stage != this.script.length - 1) {
-            this.stage++;
-        } else {
-            if (this.successful) {
-                // give results
-            } else {
-                // GAME OVER
-                console.log('stuff');
-            }
-        }
-    }
-
-    checkDone(targetBoolProperty){
-        // let status = new Promise;
-        // console.log('This object:', this);
-        console.log(this.hasOwnProperty(targetBoolProperty));
-        // let status = targetBoolProperty;
-    }
-
-    nextLine(){
-
-    } */
 
   // check
   // objectiveFullfilled() {}

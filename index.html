@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <script defer src="./scripts/script.js" type="module"></script>
     <!-- <script defer src="./scripts/Space_Battle.js" type="module"></script> -->
-    <title>Space Battle</title>
+    <title>Infinite Odyssey</title>
 </head>
 
 <body>
@@ -22,12 +22,21 @@
             <div id="enemySide" class="turf enemy">
                 <!-- <div id="enemy-grid"></div> -->
             </div>
+
+            <div id="messageBox">
+                <div id="messageBox-inner">
+                </div>
+                <button id="cursorNext" onclick="console.log('click')"></button>
+            </div>
+            <div id="game-menu" class="menu">
+                Game Menu
+            </div>
         </div>
 
-        <div id="messageBox">
-            <div id="messageBox-inner">
-            </div>
-            <button id="cursorNext" onclick="console.log('click')"></button>
+
+        <div id="game-bottom-cache">
+            <button id="menu-button">Menu</button>
+            <button id="weapons-button">Weapons</button>
         </div>
     </div>
 </body>

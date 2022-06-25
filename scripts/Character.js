@@ -2,12 +2,13 @@ import { $game, $player } from "./script.js";
 import { Weapon } from "./Weapon.js";
 
 class Character {
-  constructor(hull, firepower, accuracy, speed, name) {
+  constructor(hull, firepower, accuracy, speed, name, isEnemy) {
+    this.name = name;
     this.hull = hull;
     this.firepower = firepower;
     this.accuracy = accuracy;
     this.speed = speed;
-    this.name = name;
+    this.isEnemy = isEnemy;
     this.isAlive = true;
     this.shield = 0;
     this.element = this.create();
@@ -15,6 +16,10 @@ class Character {
 
   create() {
     let newActor = document.createElement("div");
+    newActor.setAttribute("data-actor-name", this.name);
+    newActor.setAttribute("data-target-callback", (a) => console.log(a));
+    newActor.addEventListener("click", () => this.select());
+    newActor.classList.add("actor");
     return newActor;
   }
 
@@ -52,6 +57,32 @@ class Character {
     this.element.remove();
     // award player points
   }
+
+  select() {
+    // allowed selectable limit: ex: (2)
+    const self = this.element;
+    const callback = self.getAttribute("data-target-callback");
+    const caller = self.getAttribute("data-target-caller");
+    // console.log(callback);
+    // console.log(eval(caller));
+    // const callback = self
+    //   .getAttribute("data-target-callback")
+    //   .replace("this", caller);
+    // console.log(callback);
+    // document.querySelectorAll(".actor").forEach((actor) => {
+    //   if (actor != self) actor.classList.remove("selected");
+    // });
+
+    // if (self.classList.contains("selected")) callback(this);
+    // caller.callback(this); // not working
+    // eval(callback)(this); // not working
+    // callback.call(caller); // not working
+    // console.log(eval(this));
+    // console.log(`${caller}.${callback}(${this})`);
+    // eval(callback).call(eval(caller));
+    self.classList.toggle("selected");
+    // $player.weapon.aim(this);
+  }
 }
 
 // :::::::: HERO ::::::::
@@ -59,7 +90,7 @@ class Character {
 class Hero extends Character {
   // $player = new Hero(200, 60, 100, 8, "");
   constructor(hull, speed, name) {
-    super(hull, 0, 0, speed, name);
+    super(hull, 0, 0, speed, name, false);
     this.actions = [];
     this.arsenal = [new Weapon()];
     this.weapon = this.arsenal[0];
@@ -94,7 +125,14 @@ class Hero extends Character {
     // calculate damage
   }
 
-  chooseWeapon() {
+  chooseWeapon() {}
+
+  prepareToFire() {
+    if (this.arsenal.length < 1) {
+      this.chooseWeapon;
+    } else {
+      this.weapon.arm();
+    }
     // setup selection window
     // return selected weapon index
   }
@@ -129,7 +167,7 @@ class Alien extends Character {
     y = 0,
     drops = []
   ) {
-    super(hull, firepower, accuracy, speed, `${name} ${index}`);
+    super(hull, firepower, accuracy, speed, `${name} ${index}`, true);
     this.x = x;
     this.y = y;
     this.drops = drops; // dropped item
