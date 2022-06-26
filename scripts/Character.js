@@ -1,6 +1,10 @@
 import { $game, $player } from "./script.js";
 import { Weapon } from "./Weapon.js";
 
+/* ================================================ **
+|| ** CHARACTER **
+** ================================================ */
+
 class Character {
   constructor(hull, firepower, accuracy, speed, name, isEnemy) {
     this.name = name;
@@ -42,6 +46,7 @@ class Character {
     } else {
       console.log(`${this.name} missed!`);
     }
+    // $game.currLevel.objective.run().next(); // NOT WORKING
 
     // calculate damage
   }
@@ -85,7 +90,9 @@ class Character {
   }
 }
 
-// :::::::: HERO ::::::::
+/* ================================================ **
+|| ** HERO **
+** ================================================ */
 
 class Hero extends Character {
   // $player = new Hero(200, 60, 100, 8, "");
@@ -115,9 +122,11 @@ class Hero extends Character {
    */
   attack(targets) {
     // let target = this.aim();
-    console.log(this.weapon);
-    let weapon = this.arsenal.length > 1 ? this.chooseWeapon() : $player.weapon;
-    let target = this.weapon.aim(targets);
+    // console.log(this.weapon);
+    targets.forEach((target) => {
+      super.attack(target);
+    });
+    $game.currLevel.wave.fight.next();
     // super / apply?
     // choose weapon (if extra weapons available)
     // choose target via aim()
@@ -142,7 +151,9 @@ class Hero extends Character {
   }
 }
 
-// :::::::: ALIEN ::::::::
+/* ================================================ **
+|| ** ALIEN **
+** ================================================ */
 
 class Alien extends Character {
   /**

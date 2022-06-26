@@ -2,22 +2,26 @@ import { $game, $player } from "./script.js";
 import { Character, Hero, Alien } from "./Character.js";
 import { Message, Prompt } from "./Message.js";
 
+/* ================================================ **
+|| ** OBJECTIVE **
+** ================================================ */
+
 export class Objective {
   constructor(tasks) {
     this.tasks = tasks;
     this.line = 0;
-    this.complete = false;
+    this.complete = this.run().done;
   }
 
   *run() {
     console.log("running line!");
     // run tasks while there are tasks remaining
-    while (!this.line < this.tasks.length) {
+    while (this.line < this.tasks.length) {
       // execute each task one at a time
       yield this.execute(this.tasks[this.line++]);
     }
     // code to run when all tasks (eg script lines) are finished
-    this.complete = true;
+    // this.complete = true;
   }
 
   // when to proceed to next script command?
@@ -26,6 +30,7 @@ export class Objective {
   // ^^ messages are always resolved once text is read and cursor is clicked
 
   execute(command) {
+    console.log(`%cRunning line ${this.line}`, "color: gray");
     const type = Object.keys(command)[0];
     const output = command[type];
 
@@ -46,16 +51,18 @@ export class Objective {
         // $game.showPrompt(output);
         break;
       case "wave":
-        console.log("fight enemies!");
-        $game.battle().next();
+        console.log("%c>>> BATTLE TIME <<<", "color: magenta");
+        // $game.battle().next();
+        $game.currLevel.wave = $game.currLevel.waves[output];
+        $game.currLevel.waves[output].start();
         break;
       case "proceed":
         console.log("executing code");
         output();
-        $game.currLevel.objective.run().next();
+        this.execute(this.tasks[this.line++]);
         break;
       default:
-        console.log("This shit broke");
+        console.log("It's broken!");
     }
   }
 

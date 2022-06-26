@@ -1,5 +1,5 @@
 import { enemySide } from "./script.js";
-import { $game, $player } from "./script.js";
+import { $game, $player, $confirmBtn } from "./script.js";
 
 export class Weapon {
   /**
@@ -50,7 +50,7 @@ export class Weapon {
     let multiple = false;
     switch (this.scopeTarget) {
       case "enemy":
-        selection = $game.remaining();
+        selection = $game.currLevel.wave.remaining();
         multiple = true;
         break;
       case "self":
@@ -120,6 +120,17 @@ export class Weapon {
           .join(", ")}!`,
         "color: lime"
       );
+      $confirmBtn.classList.add("active");
+      $confirmBtn.addEventListener(
+        "click",
+        () => {
+          $confirmBtn.classList.remove("active");
+          this.confirmTargets();
+        },
+        {
+          once: true,
+        }
+      );
       // clear target selection
       // gone head and attack
     }
@@ -130,6 +141,7 @@ export class Weapon {
 
   /* --------------------------------------------- **
   || VALID TARGET
+  || - Helper: validate target
   ** --------------------------------------------- */
   validTarget(target, scope) {
     switch (scope) {
@@ -144,6 +156,16 @@ export class Weapon {
 
   /* --------------------------------------------- **
   || CONFIRM TARGET
+  || - Confirm selected target(s)
+  || - Proceed to attack
   ** --------------------------------------------- */
-  confirmTarget() {}
+  confirmTargets() {
+    console.log("Confirm targets");
+    // console.log(this.targets);
+    this.targets.forEach((target) =>
+      target.element.classList.remove("selected")
+    );
+    $player.attack(this.targets);
+    this.targets = [];
+  }
 }

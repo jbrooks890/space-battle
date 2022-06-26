@@ -76,7 +76,7 @@ class Message {
     this.display = "";
     this.active = false;
     this.container.classList.remove("active");
-    $game.currLevel.objective.run().next();
+    $game.currLevel.stage.next();
   }
 }
 
@@ -114,6 +114,13 @@ class Prompt extends Message {
     this.input.setAttribute("type", "text");
     this.element.appendChild(printQuestion);
     this.element.appendChild(this.input);
+    this.cursor.addEventListener(
+      "click",
+      () => {
+        this.collectPrompt();
+      },
+      { once: true }
+    );
   }
 
   collectPrompt() {
