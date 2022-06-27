@@ -88,14 +88,17 @@ class Message {
 ** ================================================ */
 
 class Prompt extends Message {
-  constructor(question, type, options) {
-    super(question, type, options);
+  constructor(question, destination, type = "prompt", options = []) {
+    super(question, type);
     this.input;
+    this.options = options;
     this.result;
+    this.destination = destination;
     this.collectPrompt_ = this.collectPrompt.bind(this);
   }
 
   init() {
+    console.log(this);
     this.container.classList.add("prompt");
     this.cursor.addEventListener("click", this.collectPrompt_);
     this.showPrompt();
@@ -124,10 +127,15 @@ class Prompt extends Message {
 
   collectPrompt() {
     console.log("running collectPrompt()");
+
+    // let evaluation = eval(this.destination);
     if (this.input.value.length > 0) {
-      this.result = this.input.value.toUpperCase();
+      this.result = this.input.value.trim().toUpperCase();
+      console.log("I am", this.result);
+      this.destination = this.result;
       this.dispose();
     }
+    console.log($player.name);
   }
 }
 

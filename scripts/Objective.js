@@ -43,12 +43,8 @@ export class Objective {
         break;
       case "prompt":
         console.log("Prompt", output);
-        let prompt = new Prompt(output);
+        let prompt = new Prompt(output, command.destination);
         prompt.init();
-        // $msg.init(output, "prompt");
-        // this.checkDone.call($msg, "active");
-        // const prompt = new Message(output, 'prompt')
-        // $game.showPrompt(output);
         break;
       case "wave":
         console.log("%c>>> BATTLE TIME <<<", "color: magenta");

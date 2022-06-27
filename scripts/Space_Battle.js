@@ -23,13 +23,13 @@ class Game {
 
   start() {
     this.currLevel = new Level("Game Start", [], [], "", [
+      // {
+      //   message:
+      //     "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
+      // },
+      { prompt: "What's your name or call sign?", destination: $player.name },
       {
-        message:
-          "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
-      },
-      { prompt: "What's your name or call sign?" },
-      {
-        message: `Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming.`,
+        message: `Welcome aboard, ${$player.name}! Let's get you ready to go.\nWe've got incoming.`,
       },
       {
         proceed: () => {
