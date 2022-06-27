@@ -38,6 +38,7 @@ export class Weapon {
     this.reticle = reticle;
     // this.aiming = false;
     this.targets = [];
+    this.confirmTargets_ = this.confirmTargets.bind(this);
   }
 
   /* --------------------------------------------- **
@@ -112,6 +113,10 @@ export class Weapon {
       }
     }
 
+    // const confirmTargets_ = this.confirmTargets.bind(this); // TODO NOT WORKING
+    $confirmBtn.removeEventListener("click", this.confirmTargets_); // TODO NOT WORKING
+    // this.confirmTargets_ = this.confirmTargets.bind(this); // TODO NOT WORKING
+
     // if less than or equal targets are selected, proceed to attack <== wait for confirmation?
     if (this.targets.length > 0 && this.targets.length <= this.scopeNum) {
       console.log(
@@ -121,22 +126,13 @@ export class Weapon {
         "color: lime"
       );
       $confirmBtn.classList.add("active");
-      $confirmBtn.addEventListener(
-        "click",
-        () => {
-          $confirmBtn.classList.remove("active");
-          this.confirmTargets();
-        },
-        {
-          once: true,
-        }
-      );
-      // clear target selection
-      // gone head and attack
+      $confirmBtn.addEventListener("click", this.confirmTargets_, {
+        once: true,
+      });
+    } else {
+      console.log(`YOU NEED TO SELECT A TARGET`);
+      $confirmBtn.classList.remove("active");
     }
-
-    // this.aiming = true;
-    // enemySide.classList.add("aiming");
   }
 
   /* --------------------------------------------- **
@@ -161,7 +157,6 @@ export class Weapon {
   ** --------------------------------------------- */
   confirmTargets() {
     console.log("Confirm targets");
-    // console.log(this.targets);
     this.targets.forEach((target) =>
       target.element.classList.remove("selected")
     );

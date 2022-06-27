@@ -23,20 +23,20 @@ class Game {
 
   start() {
     this.currLevel = new Level("Game Start", [], [], "", [
-      //   {
-      //     message:
-      //       "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
-      //   },
-      //   { prompt: "What's your name or call sign?" },
-      //   {
-      //     message: `Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming.`,
-      //   },
+      {
+        message:
+          "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
+      },
+      { prompt: "What's your name or call sign?" },
+      {
+        message: `Welcome aboard, <NAME>! Let's get you ready to go.\nWe've got incoming.`,
+      },
       {
         proceed: () => {
           this.gameState = 1;
           heroSide.appendChild($player.element);
           const creature = {
-            number: 1,
+            number: 2,
             hull: 50,
             firepower: 40,
             accuracy: 90,

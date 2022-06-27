@@ -30,6 +30,9 @@ const $game = new Game();
 const $player = new Hero(200, 8, "Angel");
 
 menuBtn.onclick = toggleMenu;
+$confirmBtn.onclick = function () {
+  this.classList.remove("active");
+};
 
 $game.start();
 

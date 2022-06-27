@@ -19,12 +19,14 @@ class Message {
     this.element = document.querySelector("#messageBox-inner");
     this.container = document.querySelector("#messageBox");
     this.cursor = document.querySelector("#cursorNext");
-    this.cursor.addEventListener("click", () => this.toNext());
+    // this.cursor.addEventListener("click", () => this.toNext());
     this.activate();
     // this.initialize();
+    this.toNext_ = this.toNext.bind(this);
   }
 
   init() {
+    this.cursor.addEventListener("click", this.toNext_);
     this.turnToPage(this.page);
   }
 
@@ -76,6 +78,7 @@ class Message {
     this.display = "";
     this.active = false;
     this.container.classList.remove("active");
+    this.cursor.removeEventListener("click", this.toNext_);
     $game.currLevel.stage.next();
   }
 }
@@ -89,17 +92,18 @@ class Prompt extends Message {
     super(question, type, options);
     this.input;
     this.result;
+    this.collectPrompt_ = this.collectPrompt.bind(this);
   }
 
   init() {
     this.container.classList.add("prompt");
-    this.cursor.addEventListener("click", this.collectPrompt);
+    this.cursor.addEventListener("click", this.collectPrompt_);
     this.showPrompt();
   }
 
   dispose() {
     this.container.classList.remove("prompt");
-    this.cursor.removeEventListener("click", this.collectPrompt);
+    this.cursor.removeEventListener("click", this.collectPrompt_);
     super.dispose();
   }
 
@@ -114,13 +118,8 @@ class Prompt extends Message {
     this.input.setAttribute("type", "text");
     this.element.appendChild(printQuestion);
     this.element.appendChild(this.input);
-    this.cursor.addEventListener(
-      "click",
-      () => {
-        this.collectPrompt();
-      },
-      { once: true }
-    );
+
+    const collectPrompt = this.collectPrompt.bind(this);
   }
 
   collectPrompt() {
