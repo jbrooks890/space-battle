@@ -8,6 +8,11 @@
   src: url(/fonts/PressStart2P-Regular.ttf);
 }
 
+@font-face {
+  font-family: Dosis;
+  src: url(/fonts/Dosis-VariableFont_wght.ttf);
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -90,7 +95,6 @@ body {
   }
 }
 
-
 .actor.selected {
   animation: blink 1s infinite;
 }
@@ -105,7 +109,7 @@ body {
 
 .enemyActor::before {
   --color: hsl(0, 100%, 50%);
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   top: 0;
@@ -194,9 +198,15 @@ body {
 }
 
 @keyframes throb {
-  0% {padding: 5px;}
-  50% {padding: 8px;}
-  100% {padding: 5px;}
+  0% {
+    padding: 5px;
+  }
+  50% {
+    padding: 8px;
+  }
+  100% {
+    padding: 5px;
+  }
 }
 
 #confirm-button {
@@ -227,9 +237,9 @@ body {
   z-index: 100;
 }
 
-#confirm-button::before{
+#confirm-button::before {
   --color: limegreen;
-  content: '\2714';
+  content: "\2714";
   display: flex;
   justify-content: center;
   align-items: center;
@@ -248,7 +258,6 @@ body {
   color: black;
 }
 
-
 /* <<<<<< GAME MENU >>>>> */
 
 #game-menu {
@@ -258,7 +267,7 @@ body {
   width: 100%;
   height: 100%;
   transition: 0.2s ease-out;
-  background-color: hsla(0,0%,0%,0.9);
+  background-color: hsla(0, 0%, 0%, 0.9);
   padding: 2rem;
   border: 2px solid cyan;
   border-radius: 10px;
@@ -303,11 +312,9 @@ body {
   color: black;
 }
 
-#game-bottom-cache button:not(:last-of-type){
+#game-bottom-cache button:not(:last-of-type) {
   margin-right: 1em;
 }
-
-
 
 /* <<<<<< MESSAGE BOX >>>>> */
 
@@ -331,13 +338,14 @@ body {
 
 #messageBox::before {
   --offset: 10px;
+  --negative: calc(var(--offset) * -1);
   content: "";
   position: absolute;
   display: block;
-  top: calc(var(--offset) * -1);
-  left: calc(var(--offset) * -1);
-  right: calc(var(--offset) * -1);
-  bottom: calc(var(--offset) * -1);
+  top: var(--negative);
+  left: var(--negative);
+  right: var(--negative);
+  bottom: var(--negative);
   background-color: black;
   filter: blur(var(--offset));
   opacity: 0.95;

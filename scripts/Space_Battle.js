@@ -23,13 +23,20 @@ class Game {
 
   start() {
     this.currLevel = new Level("Game Start", [], [], "", [
-      // {
-      //   message:
-      //     "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
-      // },
-      { prompt: "What's your name or call sign?", destination: $player.name },
       {
-        message: `Welcome aboard, ${$player.name}! Let's get you ready to go.\nWe've got incoming.`,
+        message: () =>
+          "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
+      },
+      {
+        prompt: () => "What's your name or call sign?",
+        destination: (e) => {
+          $player.name = e;
+          $player.element.setAttribute("data-player-name", e);
+        },
+      },
+      {
+        message: () =>
+          `Welcome aboard, ${$player.name}! Let's get you ready to go.\nWe've got incoming.`,
       },
       {
         proceed: () => {
@@ -59,8 +66,6 @@ class Game {
             );
 
             horde.push(alien);
-            // this.enemies.push(alien); // TODO remove
-            // enemySide.appendChild(alien.element); //TODO refactor in WAVE
           }
           let wave = new Wave(
             "Shroomian Scouts",
@@ -71,13 +76,14 @@ class Game {
           this.currLevel.waves.push(wave);
         },
       },
-      //   {
-      //     message:
-      //       "Looks like the SHROOMIANS sent a scout ahead.\nPrepare to engage!",
-      //   },
+      {
+        message: () =>
+          "Looks like the SHROOMIANS sent a scout ahead.\nPrepare to engage!",
+      },
       { wave: 0 },
       {
-        message: `Excellent work <NAME>!\nMaybe you are everything they claim!\nHere! Take this.`,
+        message: () =>
+          `Excellent work, ${$player.name}!\nMaybe you are everything they claim!\nHere! Take this.`,
       },
     ]);
 
@@ -165,10 +171,8 @@ class Level {
   }
 
   start() {
-    // console.log('starting Level');
-    // this.script.run().next();
-    this.stage.next();
-    // this.execute(this.tasks[0]);
+    // this.stage.next();
+    this.script.runNext();
   }
 
   checkDone() {

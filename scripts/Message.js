@@ -79,7 +79,8 @@ class Message {
     this.active = false;
     this.container.classList.remove("active");
     this.cursor.removeEventListener("click", this.toNext_);
-    $game.currLevel.stage.next();
+    // $game.currLevel.stage.next();
+    $game.currLevel.script.runNext();
   }
 }
 
@@ -98,7 +99,6 @@ class Prompt extends Message {
   }
 
   init() {
-    console.log(this);
     this.container.classList.add("prompt");
     this.cursor.addEventListener("click", this.collectPrompt_);
     this.showPrompt();
@@ -111,7 +111,7 @@ class Prompt extends Message {
   }
 
   showPrompt() {
-    console.log("running showPrompt()");
+    // console.log("running showPrompt()");
     this.clearMessageBox();
     const printQuestion = document.createElement("p");
     printQuestion.innerHTML = this.content;
@@ -126,16 +126,11 @@ class Prompt extends Message {
   }
 
   collectPrompt() {
-    console.log("running collectPrompt()");
-
-    // let evaluation = eval(this.destination);
     if (this.input.value.length > 0) {
       this.result = this.input.value.trim().toUpperCase();
-      console.log("I am", this.result);
-      this.destination = this.result;
+      this.destination(this.result);
       this.dispose();
     }
-    console.log($player.name);
   }
 }
 

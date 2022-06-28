@@ -24,6 +24,10 @@ export class Objective {
     // this.complete = true;
   }
 
+  runNext() {
+    if (this.line < this.tasks.length) this.execute(this.tasks[this.line++]);
+  }
+
   // when to proceed to next script command?
   // ^^ once the previous one is resolved
   // ^^ resolved once designated task is completed
@@ -37,13 +41,13 @@ export class Objective {
     switch (type) {
       case "message":
         // console.log("Message:", output);
-        let message = new Message(output);
+        let message = new Message(output());
         message.init();
         // this.checkDone.call($msg, "active");
         break;
       case "prompt":
-        console.log("Prompt", output);
-        let prompt = new Prompt(output, command.destination);
+        console.log("Prompt", output());
+        let prompt = new Prompt(output(), command.destination);
         prompt.init();
         break;
       case "wave":
