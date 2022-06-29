@@ -19,7 +19,7 @@ export class Weapon {
     power = 60,
     type = "projectile",
     accuracy = 100,
-    scopeNum = 1,
+    scopeNum = 2,
     scopeTarget = "enemy",
     effect = "damage",
     graphic = "",

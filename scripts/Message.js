@@ -101,7 +101,7 @@ class Prompt extends Message {
   init() {
     this.container.classList.add("prompt");
     this.cursor.addEventListener("click", this.collectPrompt_);
-    this.showPrompt();
+    this.options.length > 0 ? this.showOptions() : this.showPrompt();
   }
 
   dispose() {
@@ -117,12 +117,27 @@ class Prompt extends Message {
     printQuestion.innerHTML = this.content;
 
     this.input = document.createElement("input");
-
     this.input.setAttribute("type", "text");
+
     this.element.appendChild(printQuestion);
     this.element.appendChild(this.input);
+  }
 
-    const collectPrompt = this.collectPrompt.bind(this);
+  showOptions() {
+    this.clearMessageBox();
+    const printQuestion = document.createElement("p");
+    printQuestion.innerHTML = this.content;
+    const form = document.createElement("form");
+    const optionBox = document.createElement("select");
+    this.options.forEach((option) => {
+      let value = Object.keys(option)[0];
+      let text = this.options[value];
+      console.log({ value });
+      let display = document.createElement("option");
+      display.innerText = text;
+      display.onclick = () => console.log({ display });
+      optionBox.appendChild(display);
+    });
   }
 
   collectPrompt() {

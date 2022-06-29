@@ -69,17 +69,17 @@ class Game {
           }
           let wave = new Wave(
             "Shroomian Scouts",
-            { type: "defeat", target: "all" },
+            { type: "defeat", targets: "all" },
             horde,
             "row"
           );
           this.currLevel.waves.push(wave);
         },
       },
-      {
-        message: () =>
-          "Looks like the SHROOMIANS sent a scout ahead.\nPrepare to engage!",
-      },
+      // {
+      //   message: () =>
+      //     "Looks like the SHROOMIANS sent a scout ahead.\nPrepare to engage!",
+      // },
       { wave: 0 },
       {
         message: () =>
@@ -152,11 +152,11 @@ class Game {
 class Level {
   /**
    *
-   * @param {*} name for display purposes
-   * @param {*} waves arr of objs, fixed waves (exact design) vs varying stats
-   * @param {*} rewards array of objects: rewards: exp, weapons, etc
-   * @param {*} background background graphic
-   * @param {*} script
+   * @param {string} name for display purposes
+   * @param {Array of Wave objects} waves arr of objs, fixed waves (exact design) vs varying stats
+   * @param {Array of Reward objects} rewards array of objects: rewards: exp, weapons, etc
+   * @param {string} background file path for background image
+   * @param {Array of Objects} script
    */
   constructor(name, waves = [], rewards = [], background, script = []) {
     this.name = name;
@@ -201,6 +201,7 @@ class Wave {
     this.turns = [];
     // this.complete = false;
     this.fight = this.battle(); //keeps track of generator iterator!
+    this.success = false;
   }
 
   /* --------------------------------------------- **
@@ -208,6 +209,7 @@ class Wave {
   ** --------------------------------------------- */
   start() {
     // TODO Display the task, eg: "DEFEAT ALL ENEMIES!"
+    // this.evalMission();
     this.loadEnemyBattlers();
     this.fight.next();
   }
@@ -260,7 +262,10 @@ class Wave {
           }
         }
       }
-      console.log("%c \n------- Results -------\n", "color: lime");
+      console.log(
+        `%c \n------- Results | Round: ${this.round} -------\n`,
+        "color: lime"
+      );
       console.log(`${$player.name} health: ${$player.hull}`);
       opponents.forEach((enemy) =>
         console.log(`${enemy.name} health: ${enemy.hull}`)
@@ -276,7 +281,8 @@ class Wave {
     );
     // this.complete = true;
     // CHECK IF OBJECTIVE IS FULFILLED
-    if ($player.isAlive) {
+    if ($player.isAlive && this.evalMission()) {
+      this.success = true;
       $game.currLevel.stage.next();
     } else {
       $game.over();
@@ -322,29 +328,46 @@ class Wave {
   || -- successful
   ** --------------------------------------------- */
 
-  // object {type: defeat, target: all/key, timed: false}
+  // object {type: defeat | target: all/key, timed: false}
 
   evalMission() {
     let target;
     let timeLimit;
+    let conditions = Object.keys(this.mission); //BACKWARDS AF?
 
-    switch (this.mission.type) {
-      case "defeat":
-        break;
-      case "survive":
-        break;
-    }
-    switch (this.mission.target) {
-      case "all":
-        target = this.enemies;
-        break;
-      case "key":
-        target = this.mission.keyTarget;
-        break;
-    }
-    if (this.mission.hasOwnProperty("timed")) {
-      timeLimit = this.mission.timed;
-    }
+    // EVALUATE EACH OBJ
+    let result = !conditions
+      .map((param) => {
+        // const condition = this.mission[conditionParam];
+        const condition = this.mission[param];
+        const targets = this.mission.targets;
+        console.log(condition);
+
+        switch (condition) {
+          case "defeat":
+            // if there is a target
+            // if target = all or NO TARGETs specified
+            if (!targets || targets === "all") {
+              return this.remaining().length === 0;
+            } else {
+              // if remaining enemies does not include specified targets
+              // targets.forEach((target) => !this.remaining().includes(target));
+              for (let target of targets) {
+                if (!this.remaining().includes(target) === false) return false;
+              }
+              return true;
+            }
+            break;
+          case "survive":
+            break;
+          case "score":
+            break;
+        }
+      })
+      .includes(false);
+
+    console.log({ result });
+    return result;
   }
 }
 

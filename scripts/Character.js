@@ -14,6 +14,7 @@ class Character {
     this.speed = speed;
     this.isEnemy = isEnemy;
     this.isAlive = true;
+    this.energy = 0;
     this.shield = 0;
     this.element = this.create();
   }
@@ -66,27 +67,8 @@ class Character {
   select() {
     // allowed selectable limit: ex: (2)
     const self = this.element;
-    const callback = self.getAttribute("data-target-callback");
-    const caller = self.getAttribute("data-target-caller");
-    // console.log(callback);
-    // console.log(eval(caller));
-    // const callback = self
-    //   .getAttribute("data-target-callback")
-    //   .replace("this", caller);
-    // console.log(callback);
-    // document.querySelectorAll(".actor").forEach((actor) => {
-    //   if (actor != self) actor.classList.remove("selected");
-    // });
 
-    // if (self.classList.contains("selected")) callback(this);
-    // caller.callback(this); // not working
-    // eval(callback)(this); // not working
-    // callback.call(caller); // not working
-    // console.log(eval(this));
-    // console.log(`${caller}.${callback}(${this})`);
-    // eval(callback).call(eval(caller));
     self.classList.toggle("selected");
-    // $player.weapon.aim(this);
   }
 }
 
@@ -99,6 +81,7 @@ class Hero extends Character {
   constructor(hull, speed, name) {
     super(hull, 0, 0, speed, name, false);
     this.actions = [];
+    this.inventory = [];
     this.arsenal = [new Weapon()];
     this.weapon = this.arsenal[0];
     this.firepower = this.weapon.power;
@@ -116,10 +99,6 @@ class Hero extends Character {
     // player chooses to: attack, repair, retreat
   }
 
-  /**
-   *
-   * @param {array} targets array of available targets
-   */
   attack(targets) {
     // let target = this.aim();
     // console.log(this.weapon);
