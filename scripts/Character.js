@@ -30,6 +30,7 @@ class Character {
 
   attack(target) {
     console.log(`${this.name} attacks ${target.name}!`);
+    this.element.classList.add("attacking");
     const min = 10;
     let roll = Math.ceil(Math.random() * this.accuracy);
     // let damage = Math.ceil(Math.random() * this.firepower);
@@ -48,7 +49,7 @@ class Character {
       console.log(`${this.name} missed!`);
     }
     // $game.currLevel.objective.run().next(); // NOT WORKING
-
+    this.element.classList.remove("attacking");
     // calculate damage
   }
 

@@ -15,17 +15,45 @@
 
 <body>
     <div id="game-wrap">
-        <div id="game-info-bar">
+        <!-- INFO BAR -->
+        <div id="game-info">
             <div id="char-info">
-                <h1 id="char-name">Hero</h1>
-                <div id="char-health">
-                    <h2 id="char-health-text">355/500</h2>
-                    <div id="char-health-bar">
-                        <div id="char-health-bar-fill"></div>
+                <!-- HERO INFO -->
+                <div id="hero-info" class="info-box active">
+                    <div class="info-box-text">
+                        <h1 class="info-box-name">Hero</h1>
+                        <h2 class="info-box-health-text">355/500</h2>
+                    </div>
+                    <div class="info-box-health">
+                        <div class="info-box-health-bar">
+                            <div class="info-box-health-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ENEMY INFO -->
+                <div id="enemy-info" class="info-box active">
+                    <div class="info-box-text">
+                        <h1 class="info-box-name">Enemy</h1>
+                        <h2 class="info-box-health-text">355/500</h2>
+                    </div>
+                    <div class="info-box-health">
+                        <div class="info-box-health-bar">
+                            <div class="info-box-health-bar-fill"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="battle-turn-cache">something</div>
+            <!-- BATTLE INFO -->
+            <div id="battle-info">
+                <div id="wave-info"><span id="player-score">Score</span></div>
+                <ul id="battle-turn-cache">
+                    <li class="hero"></li>
+                    <li class="enemy"></li>
+                    <li class="enemy"></li>
+                    <li class="hero"></li>
+                </ul>
+
+            </div>
         </div>
         <div id="game-board">
             <div id="heroSide" class="turf hero">
@@ -38,6 +66,7 @@
             <div id="messageBox">
                 <div id="messageBox-inner">
                 </div>
+                <button id="skip-scene">Skip</button>
                 <button id="cursorNext"></button>
             </div>
             <div id="game-menu" class="menu">
