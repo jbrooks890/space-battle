@@ -19,6 +19,18 @@ function toggleMenu() {
   gameMenu.classList.toggle("active");
 }
 
+// function updateEnemyDisplay(enemy) {
+//   const enemyInfo = document.getElementById("enemy-info");
+//   const enemyName = enemyInfo.querySelector(".info-box-name");
+//   const enemyHealthText = enemyInfo.querySelector(".info-box-health-text");
+//   const enemyHealthFill = enemyInfo.querySelector(".info-box-health-bar-fill");
+
+//   enemyInfo.classList.add(active);
+//   enemyName = enemy.name;
+//   enemyHealthText = `${enemy.health}/${enemy.maxHealth}`;
+//   enemyHealthFill.style.width(`${Math.round(enemy.health / enemy.maxHealth)}%`);
+// }
+
 // :::::::::::::::::: TEST EXECUTION ::::::::::::::::::
 
 // msgCursor.onclick = () => {

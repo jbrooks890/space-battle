@@ -16,7 +16,7 @@ export class Weapon {
    */
   constructor(
     name = "Photon Blaster",
-    power = 60,
+    power = 50,
     type = "projectile",
     accuracy = 100,
     scopeNum = 2,
@@ -113,9 +113,7 @@ export class Weapon {
       }
     }
 
-    // const confirmTargets_ = this.confirmTargets.bind(this); // TODO NOT WORKING
-    $confirmBtn.removeEventListener("click", this.confirmTargets_); // TODO NOT WORKING
-    // this.confirmTargets_ = this.confirmTargets.bind(this); // TODO NOT WORKING
+    $confirmBtn.removeEventListener("click", this.confirmTargets_);
 
     // if less than or equal targets are selected, proceed to attack <== wait for confirmation?
     if (this.targets.length > 0 && this.targets.length <= this.scopeNum) {
@@ -156,7 +154,6 @@ export class Weapon {
   || - Proceed to attack
   ** --------------------------------------------- */
   confirmTargets() {
-    console.log("Confirm targets");
     this.targets.forEach((target) =>
       target.element.classList.remove("selected")
     );

@@ -1,14 +1,16 @@
 import { $game, $player } from "./script.js";
 import { Weapon } from "./Weapon.js";
+import { $display } from "./UIManager.js";
 
 /* ================================================ **
 || ** CHARACTER **
 ** ================================================ */
 
 class Character {
-  constructor(hull, firepower, accuracy, speed, name, isEnemy) {
+  constructor(maxHealth, firepower, accuracy, speed, name, isEnemy) {
     this.name = name;
-    this.hull = hull;
+    this.health = maxHealth;
+    this.maxHealth = maxHealth;
     this.firepower = firepower;
     this.accuracy = accuracy;
     this.speed = speed;
@@ -20,11 +22,14 @@ class Character {
   }
 
   create() {
-    let newActor = document.createElement("div");
+    const newActor = document.createElement("div");
     newActor.setAttribute("data-actor-name", this.name);
     newActor.setAttribute("data-target-callback", (a) => console.log(a));
     newActor.addEventListener("click", () => this.select());
     newActor.classList.add("actor");
+    const newActorInfo = document.createElement("div");
+    newActorInfo.classList.add("info");
+    newActor.appendChild(newActorInfo);
     return newActor;
   }
 
@@ -39,14 +44,9 @@ class Character {
     console.log({ roll }, { damage });
     // determine hit
     if (roll >= Math.round(this.accuracy / 2)) {
-      if (target.hull - damage <= 0) {
-        target.hull -= target.hull;
-        target.destroy();
-      } else {
-        target.hull -= damage;
-      }
+      target.hit(damage);
     } else {
-      console.log(`${this.name} missed!`);
+      target.miss(this);
     }
     // $game.currLevel.objective.run().next(); // NOT WORKING
     this.element.classList.remove("attacking");
@@ -68,8 +68,33 @@ class Character {
   select() {
     // allowed selectable limit: ex: (2)
     const self = this.element;
-
     self.classList.toggle("selected");
+  }
+
+  hit(damage) {
+    // PLAY HIT ANIM
+    this.element.classList.remove("hit");
+    this.element.querySelector(".info").setAttribute("data-input", damage);
+    this.element.classList.add("hit");
+    // this.element.onanimationend = () => this.element.classList.remove("hit");
+
+    if (this.health - damage <= 0) {
+      this.health -= this.health;
+      this.destroy();
+    } else {
+      this.health -= damage;
+      if (this.health <= this.maxHealth / 5) this.element.classList.add("weak");
+    }
+    $display.showCharInfo(this);
+  }
+
+  miss(attacker) {
+    // PLAY MISS ANIM
+    this.element.classList.remove("miss");
+    this.element.querySelector(".info").setAttribute("data-input", "miss");
+    this.element.classList.add("miss");
+    // this.element.onanimationend = () => this.element.classList.remove("miss");
+    console.log(`${attacker.name} missed!`);
   }
 }
 
@@ -79,8 +104,8 @@ class Character {
 
 class Hero extends Character {
   // $player = new Hero(200, 60, 100, 8, "");
-  constructor(hull, speed, name) {
-    super(hull, 0, 0, speed, name, false);
+  constructor(maxHealth, speed, name) {
+    super(maxHealth, 0, 0, speed, name, false);
     this.actions = [];
     this.inventory = [];
     this.arsenal = [new Weapon()];
@@ -136,19 +161,8 @@ class Hero extends Character {
 ** ================================================ */
 
 class Alien extends Character {
-  /**
-   *
-   * @param {integer} hull
-   * @param {integer} firepower
-   * @param {integer} accuracy
-   * @param {string} name
-   * @param {integer} index
-   * @param {integer} x
-   * @param {integer} y
-   * @param {Array of Objects} drops
-   */
   constructor(
-    hull,
+    maxHealth,
     firepower,
     accuracy,
     speed,
@@ -158,7 +172,8 @@ class Alien extends Character {
     y = 0,
     drops = []
   ) {
-    super(hull, firepower, accuracy, speed, `${name} ${index}`, true);
+    super(maxHealth, firepower, accuracy, speed, `${name} ${index}`, true);
+    this.index = index;
     this.x = x;
     this.y = y;
     this.drops = drops; // dropped item
@@ -170,6 +185,7 @@ class Alien extends Character {
     newEnemy.id = this.name.toLowerCase().trim().replace(" ", "-");
     newEnemy.classList.add("enemyActor");
     newEnemy.setAttribute("data-enemy-name", this.name);
+    newEnemy.addEventListener("click", () => $display.showCharInfo(this));
     return newEnemy;
   }
 
@@ -186,6 +202,22 @@ class Alien extends Character {
         // }
       });
     }
+  }
+
+  updateEnemyDisplay() {
+    const enemyInfo = document.getElementById("enemy-info");
+    const enemyName = enemyInfo.querySelector(".info-box-name");
+    const enemyHealthText = enemyInfo.querySelector(".info-box-health-text");
+    const enemyHealthFill = enemyInfo.querySelector(
+      ".info-box-health-bar-fill"
+    );
+
+    enemyInfo.classList.add("active");
+    enemyName.innerText = this.name;
+    enemyHealthText.innerText = `${this.health}/${this.maxHealth}`;
+    enemyHealthFill.style.width = `${Math.round(
+      (this.health / this.maxHealth) * 100
+    )}%`;
   }
 }
 

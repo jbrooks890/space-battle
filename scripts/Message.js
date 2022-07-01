@@ -26,6 +26,7 @@ class Message {
   }
 
   init() {
+    document.getElementById("game-wrap").classList.add("message");
     this.cursor.addEventListener("click", this.toNext_);
     this.turnToPage(this.page);
   }
@@ -75,6 +76,7 @@ class Message {
   }
 
   dispose() {
+    document.getElementById("game-wrap").classList.remove("message");
     this.display = "";
     this.active = false;
     this.container.classList.remove("active");
@@ -129,7 +131,7 @@ class Prompt extends Message {
     printQuestion.innerHTML = this.content;
     const form = document.createElement("form");
     const optionBox = document.createElement("select");
-    this.options.forEach((option) => {
+    this.options.forEach(option => {
       let value = Object.keys(option)[0];
       let text = this.options[value];
       console.log({ value });

@@ -44,7 +44,7 @@ class Game {
           heroSide.appendChild($player.element);
           const creature = {
             number: 2,
-            hull: 50,
+            health: 50,
             firepower: 40,
             accuracy: 90,
             speed: 9,
@@ -54,7 +54,7 @@ class Game {
           let horde = [];
           for (let i = 0; i < creature.number; i++) {
             let alien = new Alien(
-              creature.hull,
+              creature.health,
               creature.firepower,
               creature.accuracy,
               creature.speed,
@@ -236,7 +236,7 @@ class Wave {
     this.gameState = 2;
     let opponents = this.remaining();
 
-    while ($player.hull > 0 && opponents.length > 0) {
+    while ($player.health > 0 && opponents.length > 0) {
       console.log(
         `%c\n>>>>>>>>>> Round: ${this.round} <<<<<<<<<<\n`,
         "color: cyan"
@@ -266,9 +266,9 @@ class Wave {
         `%c \n------- Results | Round: ${this.round} -------\n`,
         "color: lime"
       );
-      console.log(`${$player.name} health: ${$player.hull}`);
+      console.log(`${$player.name} health: ${$player.health}`);
       opponents.forEach((enemy) =>
-        console.log(`${enemy.name} health: ${enemy.hull}`)
+        console.log(`${enemy.name} health: ${enemy.health}`)
       );
       opponents = this.remaining();
       this.round++;
@@ -293,8 +293,8 @@ class Wave {
   || GET TURN ORDER
   ** --------------------------------------------- */
 
-  getTurnOrder(opponents) {
-    // console.log(`getTurnOrder ${opponents.map(x => x.name).join(", ")}`);
+  getTurnOrder(battlers) {
+    // console.log(`getTurnOrder ${battlers.map(x => x.name).join(", ")}`);
     let sorted = [
       {
         char: $player,
@@ -302,15 +302,32 @@ class Wave {
       },
     ];
 
-    opponents.forEach((opponent) => {
-      let speed_ = Math.ceil(Math.random() * opponent.speed);
-      sorted.push({ char: opponent, speed: speed_ });
+    battlers.forEach((battler) => {
+      let speed_ = Math.ceil(Math.random() * battler.speed);
+      sorted.push({ char: battler, speed: speed_ });
     });
 
     // console.log(sorted.sort((a, b) => b.speed - a.speed));
     let order = sorted.sort((a, b) => b.speed - a.speed).map((x) => x.char);
     this.turns.push(order);
+    document
+      .querySelectorAll(".token")
+      .forEach((token) => token.classList.remove("active"));
+    order.forEach((battler) => this.popTurnCache(battler, battler === $player));
     return order;
+  }
+
+  /* --------------------------------------------- **
+  || POPULATE TURN CACHE
+  ** --------------------------------------------- */
+  popTurnCache(char, isHero) {
+    const turnCache = document.getElementById("battle-turn-cache");
+    const newToken = document.createElement("li");
+    const tokenClass = isHero ? "hero" : "enemy";
+    if (!isHero) newToken.setAttribute("data-enemy-index", char.index);
+
+    newToken.classList.add(tokenClass, "token", "active");
+    turnCache.appendChild(newToken);
   }
 
   /* --------------------------------------------- **
