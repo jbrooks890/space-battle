@@ -1,6 +1,10 @@
 import { enemySide } from "./script.js";
 import { $game, $player, $confirmBtn } from "./script.js";
 
+/* ================================================ **
+|| ** WEAPON **
+** ================================================ */
+
 export class Weapon {
   /**
    *
