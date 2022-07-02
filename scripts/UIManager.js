@@ -34,7 +34,7 @@ class UIManager {
 
 class BattleUIManager {
   constructor() {
-    this.field = document.getElementById("#game-board");
+    this.field = document.getElementById("enemySide");
     this.fieldWidth = this.field.clientWidth;
     this.fieldHeight = this.field.clientHeight;
     this.fieldVcenter = this.fieldHeight / 2;
@@ -43,12 +43,18 @@ class BattleUIManager {
   }
 
   setFormation(battlers, formation) {
-    this.formationWidth;
-    this.formationHeight;
+    // this.formationWidth;
+    // this.formationHeight;
     let battlerWidths = battlers.map((battler) => battler.element.clientWidth);
     let battlerHeights = battlers.map(
       (battler) => battler.element.clientHeight
     );
+
+    // let formationWidth = 0;
+    // let formationHeight = 0;
+    // let formHCenter;
+    // let formVCenter;
+    // let leftStart;
 
     switch (formation) {
       // TRIANGLE ===========================================
@@ -73,13 +79,15 @@ class BattleUIManager {
         this.formationWidth = battlerWidths.reduce((a, b) => a + b);
         this.formationHeight = Math.max(...battlerHeights);
 
-        formHCenter = Math.round(this.formationWidth / 2);
-        formVCenter = Math.round(this.formationHeight / 2);
+        let formHCenter = Math.round(this.formationWidth / 2);
+        let formVCenter = Math.round(this.formationHeight / 2);
+        let leftStart = this.fieldHcenter - formHCenter;
 
-        leftStart = this.fieldHcenter - this.formationWidth;
         battlers.forEach((battler) => {
-          battler.style.left = leftStart;
-          battler.style.top = this.fieldVcenter - battler.clientHeight / 2;
+          battler = battler.element;
+          battler.style.left = leftStart + "px";
+          battler.style.top =
+            this.fieldVcenter - battler.clientHeight / 2 + "px";
           leftStart += battler.clientWidth;
         });
 
@@ -119,5 +127,6 @@ class BattleUIManager {
 }
 
 const $display = new UIManager();
+const $battle = new BattleUIManager();
 
-export { $display };
+export { $display, $battle };

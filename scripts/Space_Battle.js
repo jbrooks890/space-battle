@@ -2,6 +2,7 @@ import { $player, enemySide, $confirmBtn, $game } from "./script.js";
 import { Alien } from "./Character.js";
 import { Objective } from "./Objective.js";
 import { Message } from "./Message.js";
+import { $battle } from "./UIManager.js";
 
 /* ================================================ **
 || ** GAME **
@@ -211,6 +212,7 @@ class Wave {
     // TODO Display the task, eg: "DEFEAT ALL ENEMIES!"
     // this.evalMission();
     this.loadEnemyBattlers();
+    $battle.setFormation(this.enemies, this.formation);
     this.fight.next();
   }
 
@@ -310,9 +312,8 @@ class Wave {
     // console.log(sorted.sort((a, b) => b.speed - a.speed));
     let order = sorted.sort((a, b) => b.speed - a.speed).map((x) => x.char);
     this.turns.push(order);
-    document
-      .querySelectorAll(".token")
-      .forEach((token) => token.classList.remove("active"));
+    document.querySelectorAll(".token");
+    // .forEach((token) => token.classList.remove("active"));
     order.forEach((battler) => this.popTurnCache(battler, battler === $player));
     return order;
   }
@@ -328,6 +329,7 @@ class Wave {
 
     newToken.classList.add(tokenClass, "token", "active");
     turnCache.appendChild(newToken);
+    char.turnToken = newToken;
   }
 
   /* --------------------------------------------- **

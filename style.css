@@ -122,6 +122,12 @@ button {
   border-radius: 50%;
 }
 
+.enemyActor {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .enemyActor::before {
   --color: hsl(330, 100%, 50%);
   content: "";

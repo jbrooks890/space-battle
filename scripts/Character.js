@@ -49,6 +49,7 @@ class Character {
       target.miss(this);
     }
     // $game.currLevel.objective.run().next(); // NOT WORKING
+    this.turnToken.classList.remove("active");
     this.element.classList.remove("attacking");
     // calculate damage
   }
