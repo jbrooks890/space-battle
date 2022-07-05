@@ -59,20 +59,51 @@ class BattleUIManager {
     switch (formation) {
       // TRIANGLE ===========================================
       case "tri":
-        let triWidth = 0;
-        let triHeight = 0;
-        for (let x = 0; x < battlers.length; x++) {
-          let colHeight = 0;
-          let colWidth = 0;
-          for (let y = 0; y < x + 1; y++) {
-            colHeight += battlerHeights[x];
-            if (battlerWidths[x] > colWidth) colWidth = battlerWidths[x];
-          }
-          triWidth += colWidth;
-          if (colHeight > triHeight) triHeight = colHeight;
+        // TRIANGULAR NUMBER FORMULA: (N^2 + N)/2 = N(N + 1)/2
+        // ↳ SOLVE FOR N: N = √(2Y + .25) - .5
+        let formation = [];
+
+        let count = 0;
+
+        // GET FORMATION WIDTH & HEIGHT (FOR CENTERING)
+        while (count < battlers.length) {
+          let col = Math.ceil(Math.sqrt(2 * (count + 1) + 0.25) - 0.5) - 1;
+
+          if (!formation[col]) formation[col] = [];
+          formation[col].push(battlers[count]);
+          count++;
         }
-        this.formationWidth = triWidth;
-        this.formationHeight = triHeight;
+
+        let formElements = formation.map((sets) =>
+          sets.map((battler) => battler.element)
+        );
+
+        let colWidths = formElements.map((set) =>
+          Math.max(...set.map((element) => element.clientWidth))
+        );
+
+        let colHeights = formElements.map((set) =>
+          set.map((element) => element.clientHeight).reduce((a, b) => a + b)
+        );
+
+        this.formationWidth = colWidths.reduce((a, b) => a + b);
+        this.formationHeight = Math.max(...colHeights);
+
+        let triHCtr = this.formationWidth / 2;
+
+        formElements.forEach((col, index) => {
+          let leftStart =
+            this.fieldHcenter - triHCtr + colWidths[index] * index;
+          let topStart = this.fieldVcenter - colHeights[index] / 2;
+
+          col.forEach((battler) => {
+            battler.style.left = leftStart + "px";
+            battler.style.top = topStart + "px";
+            topStart += battler.clientHeight;
+          });
+          // leftStart += colWidths[index];
+        });
+
         break;
       // ROW ===========================================
       case "row":
@@ -80,7 +111,6 @@ class BattleUIManager {
         this.formationHeight = Math.max(...battlerHeights);
 
         let formHCenter = Math.round(this.formationWidth / 2);
-        let formVCenter = Math.round(this.formationHeight / 2);
         let leftStart = this.fieldHcenter - formHCenter;
 
         battlers.forEach((battler) => {

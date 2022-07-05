@@ -61,6 +61,7 @@ class Character {
   destroy() {
     console.log(`${this.name} was destroyed`);
     this.isAlive = false;
+    this.turnToken.classList.remove("active");
     // remove alien from the dom
     this.element.remove();
     // award player points

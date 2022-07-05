@@ -44,9 +44,9 @@ class Game {
           this.gameState = 1;
           heroSide.appendChild($player.element);
           const creature = {
-            number: 2,
+            number: 3,
             health: 50,
-            firepower: 40,
+            firepower: 10,
             accuracy: 90,
             speed: 9,
             name: "Scout",
@@ -72,7 +72,7 @@ class Game {
             "Shroomian Scouts",
             { type: "defeat", targets: "all" },
             horde,
-            "row"
+            "tri"
           );
           this.currLevel.waves.push(wave);
         },
@@ -284,6 +284,7 @@ class Wave {
     // this.complete = true;
     // CHECK IF OBJECTIVE IS FULFILLED
     if ($player.isAlive && this.evalMission()) {
+      // RESET TURN CACHE
       this.success = true;
       $game.currLevel.stage.next();
     } else {
