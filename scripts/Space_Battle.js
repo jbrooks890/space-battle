@@ -24,21 +24,21 @@ class Game {
 
   start() {
     this.currLevel = new Level("Game Start", [], [], "", [
-      {
-        message: () =>
-          "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
-      },
-      {
-        prompt: () => "What's your name or call sign?",
-        destination: (e) => {
-          $player.name = e;
-          $player.element.setAttribute("data-player-name", e);
-        },
-      },
-      {
-        message: () =>
-          `Welcome aboard, ${$player.name}! Let's get you ready to go.\nWe've got incoming.`,
-      },
+      // {
+      //   message: () =>
+      //     "Hey! You're that new hotshot pilot!\nThey call you, er... I forgot.\nRemind me again.",
+      // },
+      // {
+      //   prompt: () => "What's your name or call sign?",
+      //   destination: (e) => {
+      //     $player.name = e;
+      //     $player.element.setAttribute("data-player-name", e);
+      //   },
+      // },
+      // {
+      //   message: () =>
+      //     `Welcome aboard, ${$player.name}! Let's get you ready to go.\nWe've got incoming.`,
+      // },
       {
         proceed: () => {
           this.gameState = 1;
