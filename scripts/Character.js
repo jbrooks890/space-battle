@@ -114,6 +114,7 @@ class Hero extends Character {
     this.weapon = this.arsenal[0];
     this.firepower = this.weapon.power;
     this.accuracy = this.weapon.accuracy;
+    this.score = 0;
   }
 
   create() {
@@ -156,6 +157,13 @@ class Hero extends Character {
   retreat() {
     console.log("retreating!");
   }
+
+  collect(awards) {}
+
+  collectPoints(qty) {
+    console.log(`${$player.name} received ${qty} points!`);
+    this.score += qty;
+  }
 }
 
 /* ================================================ **
@@ -172,13 +180,15 @@ class Alien extends Character {
     index = null,
     x = 0,
     y = 0,
-    drops = []
+    drops = [],
+    points = 50
   ) {
     super(maxHealth, firepower, accuracy, speed, `${name} ${index}`, true);
     this.index = index;
     this.x = x;
     this.y = y;
     this.drops = drops; // dropped item
+    this.points = points;
     // maybe speed?
   }
 
@@ -203,6 +213,7 @@ class Alien extends Character {
         //         break;
         // }
       });
+      $player.collectPoints(this.points);
     }
   }
 
